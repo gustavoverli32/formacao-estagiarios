@@ -12,7 +12,7 @@
   --border:rgba(26,25,22,.10); --border2:rgba(26,25,22,.18);
   --or:#EC7000; --or-d:#C45E00; --or-l:#FFF3E8; --or-f:#FFF9F5; --or-m:#F5A85A;
   --r:12px; --r2:7px; --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
-  --nb:60px;
+  --nb:68px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
 .layout{display:flex;min-height:100vh;}
@@ -47,13 +47,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .mobile-mode-btn.on{background:var(--or);color:#fff;border-color:var(--or);}
 
 /* ── BOTTOM NAV ── */
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--nb);background:var(--surface);border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 12px rgba(0,0,0,.06);}
-.bn-items{display:flex;height:100%;align-items:stretch;}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border-radius:8px;margin:6px 2px;-webkit-tap-highlight-color:transparent;}
-.bn-item.active .bn-icon,.bn-item.active .bn-lbl{color:var(--or);}
-.bn-item.active .bn-lbl{font-weight:500;}
-.bn-icon{font-size:18px;color:var(--ink3);}
-.bn-lbl{font-size:10px;color:var(--ink3);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--nb);background:var(--surface);border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 16px rgba(0,0,0,.08);}
+.bn-items{display:grid;grid-template-columns:repeat(4,1fr);height:100%;padding:6px 8px;}
+.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:12px;transition:background .15s;-webkit-tap-highlight-color:transparent;}
+.bn-item:active{background:var(--or-l);}
+.bn-item.active{background:var(--or-l);}
+.bn-item.active .bn-icon{color:var(--or);}
+.bn-item.active .bn-lbl{color:var(--or);font-weight:500;}
+.bn-icon{font-size:20px;color:var(--ink3);line-height:1;transition:color .15s;}
+.bn-lbl{font-size:11px;color:var(--ink3);transition:color .15s;text-align:center;line-height:1.2;}
 
 /* ── MAIN ── */
 .main{flex:1;overflow-x:hidden;}
@@ -149,6 +151,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .btn-save:disabled{opacity:.4;cursor:not-allowed;}
 .saved-lbl{font-size:12px;color:var(--or-d);opacity:0;transition:opacity .3s;margin-left:10px;}
 .saved-lbl.show{opacity:1;}
+
+
+/* ── CADASTRO SINGLE ── */
+.cad-single-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;max-width:600px;}
+.cad-single-header{display:flex;align-items:center;gap:14px;padding:20px 24px 18px;border-bottom:1px solid var(--border);background:var(--or-f);}
+.cad-single-av{width:48px;height:48px;border-radius:12px;background:var(--or-l);color:var(--or-d);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;flex-shrink:0;border:1px solid rgba(236,112,0,.2);transition:background .2s,color .2s;}
+.cad-single-av.filled{background:var(--or);color:#fff;border-color:var(--or);}
+.cad-single-title{font-size:15px;font-weight:500;color:var(--ink);}
+.cad-single-sub{font-size:12px;color:var(--ink3);margin-top:2px;}
+.cad-single-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px 24px;}
+.cad-single-footer{padding:16px 24px;border-top:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:12px;}
+.btn-cad-add{padding:10px 22px;background:var(--or);color:#fff;border:none;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;}
+.btn-cad-add:hover{background:var(--or-d);}
+.btn-cad-add:disabled{opacity:.4;cursor:not-allowed;}
+/* cadastro list */
+.cad-list-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.cad-list-count{background:var(--or);color:#fff;font-size:10px;font-weight:500;padding:1px 7px;border-radius:20px;letter-spacing:0;}
+.cad-list-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .12s;}
+.cad-list-row:hover{border-color:var(--or-m);}
+.cad-list-av{width:34px;height:34px;border-radius:8px;background:var(--or-l);color:var(--or-d);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:14px;flex-shrink:0;border:1px solid rgba(236,112,0,.15);}
+.cad-list-info{flex:1;min-width:0;}
+.cad-list-name{font-size:13.5px;font-weight:500;color:var(--ink);}
+.cad-list-meta{font-size:11.5px;color:var(--ink3);margin-top:2px;display:flex;gap:10px;}
+.cad-list-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.cad-list-btn:hover{background:var(--or-l);color:var(--or-d);border-color:var(--or-m);}
+.cad-list-empty{font-size:13px;color:var(--ink3);font-style:italic;padding:16px 0;}
+@media(max-width:768px){.cad-single-fields{grid-template-columns:1fr;}.cad-single-header,.cad-single-footer,.cad-single-fields{padding-left:16px;padding-right:16px;}}
 
 /* ── TRILHAS ── */
 .trilha-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
@@ -350,22 +379,43 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 
   <!-- CADASTRO -->
   <section id="page-cadastro" class="page">
-    <div class="ph"><h1>Cadastro de <em>estagiários</em></h1><p id="cadDesc">Selecione um estagiário para visualizar ou editar.</p></div>
-    <div class="cad-chips" id="cadChips"></div>
-    <div id="cadForm" style="display:none;">
-      <div class="card" style="max-width:600px;">
-        <div class="card-ttl" id="cadFormTtl">Perfil</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="field-grp" style="grid-column:1/-1;"><div class="field-lbl">Nome completo</div><input class="field-in" type="text" id="cadNome" placeholder="Nome completo" maxlength="60"></div>
-          <div class="field-grp"><div class="field-lbl">Idade</div><input class="field-in" type="number" id="cadIdade" placeholder="Ex: 20" min="16" max="35" inputmode="numeric"></div>
-          <div class="field-grp"><div class="field-lbl">Funcional (9 dígitos)</div><input class="field-in" type="text" id="cadFunc" placeholder="000000000" maxlength="9" inputmode="numeric"></div>
-          <div class="field-grp" style="grid-column:1/-1;"><div class="field-lbl">Data de início</div><input class="field-in" type="date" id="cadInicio"></div>
-        </div>
-        <div style="display:flex;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
-          <button class="btn-save" id="cadSaveBtn">Salvar perfil</button>
-          <span class="saved-lbl" id="cadSavedLbl">✓ Salvo</span>
+    <div class="ph"><h1>Cadastro de <em>estagiários</em></h1><p>Preencha os dados e clique em adicionar. O estagiário aparece automaticamente na lista de acompanhamento.</p></div>
+
+    <div class="cad-single-card">
+      <div class="cad-single-header">
+        <div class="cad-single-av" id="cadAv">?</div>
+        <div>
+          <div class="cad-single-title" id="cadPreviewName">Novo estagiário</div>
+          <div class="cad-single-sub" id="cadPreviewSub">Preencha o nome para começar</div>
         </div>
       </div>
+      <div class="cad-single-fields">
+        <div class="field-grp" style="grid-column:1/-1;">
+          <div class="field-lbl">Nome completo</div>
+          <input class="field-in" type="text" id="cadNome" placeholder="Ex: João Silva" maxlength="60">
+        </div>
+        <div class="field-grp">
+          <div class="field-lbl">Idade</div>
+          <input class="field-in" type="number" id="cadIdade" placeholder="Ex: 20" min="16" max="35" inputmode="numeric">
+        </div>
+        <div class="field-grp">
+          <div class="field-lbl">Funcional (9 dígitos)</div>
+          <input class="field-in" type="text" id="cadFunc" placeholder="000000000" maxlength="9" inputmode="numeric">
+        </div>
+        <div class="field-grp" style="grid-column:1/-1;">
+          <div class="field-lbl">Data de início</div>
+          <input class="field-in" type="date" id="cadInicio">
+        </div>
+      </div>
+      <div class="cad-single-footer">
+        <button class="btn-cad-add" id="cadAddBtn">+ Adicionar estagiário</button>
+        <span class="saved-lbl" id="cadSavedLbl">✓ Adicionado</span>
+      </div>
+    </div>
+
+    <div id="cadListWrap" style="margin-top:28px;">
+      <div class="cad-list-title">Estagiários cadastrados <span class="cad-list-count" id="cadListCount">0</span></div>
+      <div id="cadList"></div>
     </div>
   </section>
 
@@ -386,10 +436,22 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <div class="bn-items">
-    <div class="bn-item active" data-page="overview"><span class="bn-icon">◈</span><span class="bn-lbl">Visão</span></div>
-    <div class="bn-item" data-page="estagiarios"><span class="bn-icon">◎</span><span class="bn-lbl">Alunos</span></div>
-    <div class="bn-item" data-page="cadastro"><span class="bn-icon">◫</span><span class="bn-lbl">Cadastro</span></div>
-    <div class="bn-item" data-page="trilhas"><span class="bn-icon">◑</span><span class="bn-lbl">Trilhas</span></div>
+    <div class="bn-item active" data-page="overview">
+      <span class="bn-icon">◈</span>
+      <span class="bn-lbl">Visão geral</span>
+    </div>
+    <div class="bn-item" data-page="estagiarios">
+      <span class="bn-icon">◎</span>
+      <span class="bn-lbl">Estagiários</span>
+    </div>
+    <div class="bn-item" data-page="cadastro">
+      <span class="bn-icon">◫</span>
+      <span class="bn-lbl">Cadastro</span>
+    </div>
+    <div class="bn-item" data-page="trilhas">
+      <span class="bn-icon">◑</span>
+      <span class="bn-lbl">Trilhas</span>
+    </div>
   </div>
 </nav>
 
@@ -662,41 +724,104 @@ function closePanel(){
 
 // ── CADASTRO ───────────────────────────────────────────────────────────────
 function renderCadChips(){
-  document.getElementById('cadChips').innerHTML=S.ests.map(function(e,i){
-    return '<button class="cad-chip'+(cadIdx===i?' on':'')+'" data-idx="'+i+'">'+e.nome+(e.perfil&&e.perfil.funcional?' <small style="opacity:.6">#'+e.perfil.funcional+'</small>':'')+'</button>';
+  renderCadList();
+}
+function renderCadList(){
+  var ests = S.ests.filter(function(e){ return e.perfil && e.perfil.funcional; });
+  document.getElementById('cadListCount').textContent = ests.length;
+  if(ests.length===0){
+    document.getElementById('cadList').innerHTML='<div class="cad-list-empty">Nenhum estagiário cadastrado ainda.</div>';
+    return;
+  }
+  document.getElementById('cadList').innerHTML = ests.map(function(e,i){
+    var realIdx = S.ests.indexOf(e);
+    var tempo = e.perfil&&e.perfil.inicio ? calcTempo(e.perfil.inicio) : null;
+    return '<div class="cad-list-row">'
+      +'<div class="cad-list-av">'+ini(e.nome)+'</div>'
+      +'<div class="cad-list-info">'
+        +'<div class="cad-list-name">'+e.nome+'</div>'
+        +'<div class="cad-list-meta">'
+          +(e.perfil.funcional?'<span>#'+e.perfil.funcional+'</span>':'')
+          +(e.perfil.idade?'<span>'+e.perfil.idade+' anos</span>':'')
+          +(tempo?'<span>'+tempo+'</span>':'')
+        +'</div>'
+      +'</div>'
+      +'<button class="cad-list-btn" data-idx="'+realIdx+'" id="editBtn'+realIdx+'">Editar</button>'
+      +'</div>';
   }).join('');
-  document.querySelectorAll('.cad-chip').forEach(function(btn){
-    btn.addEventListener('click',function(){ selectCad(parseInt(this.dataset.idx)); });
+  document.querySelectorAll('.cad-list-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ loadEditCad(parseInt(this.dataset.idx)); });
   });
 }
-function selectCad(idx){
-  cadIdx=idx;
-  var e=S.ests[idx];
-  document.getElementById('cadForm').style.display='block';
-  document.getElementById('cadFormTtl').textContent='Perfil — '+e.nome;
-  document.getElementById('cadNome').value=e.nome;
-  document.getElementById('cadIdade').value=e.perfil&&e.perfil.idade?e.perfil.idade:'';
-  document.getElementById('cadFunc').value=e.perfil&&e.perfil.funcional?e.perfil.funcional:'';
-  document.getElementById('cadInicio').value=e.perfil&&e.perfil.inicio?e.perfil.inicio:'';
-  var dis=!editor;
-  ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){document.getElementById(id).disabled=dis;});
-  document.getElementById('cadSaveBtn').disabled=dis;
-  document.getElementById('cadSavedLbl').classList.remove('show');
-  renderCadChips();
+function loadEditCad(idx){
+  if(!editor) return;
+  var e = S.ests[idx];
+  cadIdx = idx;
+  document.getElementById('cadNome').value = e.nome;
+  document.getElementById('cadIdade').value = e.perfil&&e.perfil.idade?e.perfil.idade:'';
+  document.getElementById('cadFunc').value = e.perfil&&e.perfil.funcional?e.perfil.funcional:'';
+  document.getElementById('cadInicio').value = e.perfil&&e.perfil.inicio?e.perfil.inicio:'';
+  updateCadPreview();
+  document.getElementById('cadAddBtn').textContent = '✓ Salvar alterações';
+  document.getElementById('cadNome').scrollIntoView({behavior:'smooth', block:'center'});
+  document.getElementById('cadNome').focus();
+}
+function updateCadPreview(){
+  var nome = document.getElementById('cadNome').value.trim();
+  var av = document.getElementById('cadAv');
+  var prevName = document.getElementById('cadPreviewName');
+  var prevSub = document.getElementById('cadPreviewSub');
+  if(nome){
+    av.textContent = ini(nome);
+    av.classList.add('filled');
+    prevName.textContent = nome;
+    prevSub.textContent = 'Pronto para adicionar';
+  } else {
+    av.textContent = '?';
+    av.classList.remove('filled');
+    prevName.textContent = 'Novo estagiário';
+    prevSub.textContent = 'Preencha o nome para começar';
+  }
 }
 function savePerfil(){
-  if(!editor||cadIdx<0) return;
-  var nome=document.getElementById('cadNome').value.trim()||S.ests[cadIdx].nome;
-  S.ests[cadIdx].nome=nome;
-  S.ests[cadIdx].perfil={
-    idade:document.getElementById('cadIdade').value,
-    funcional:document.getElementById('cadFunc').value.replace(/[^0-9]/g,'').slice(0,9),
-    inicio:document.getElementById('cadInicio').value
+  if(!editor) return;
+  var nome = document.getElementById('cadNome').value.trim();
+  if(!nome){ document.getElementById('cadNome').focus(); return; }
+  var func = document.getElementById('cadFunc').value.replace(/[^0-9]/g,'').slice(0,9);
+  var perfil = {
+    idade: document.getElementById('cadIdade').value,
+    funcional: func,
+    inicio: document.getElementById('cadInicio').value
   };
-  persist(true); renderCards(); renderCadChips();
-  document.getElementById('cadFormTtl').textContent='Perfil — '+nome;
+  if(cadIdx>=0){
+    // editing existing
+    S.ests[cadIdx].nome = nome;
+    S.ests[cadIdx].perfil = perfil;
+  } else {
+    // find first slot with default name or add new
+    var slot = -1;
+    for(var i=0;i<S.ests.length;i++){
+      if(!S.ests[i].perfil||!S.ests[i].perfil.funcional){slot=i;break;}
+    }
+    if(slot>=0){
+      S.ests[slot].nome = nome;
+      S.ests[slot].perfil = perfil;
+    } else {
+      S.ests.push({nome:nome, meses:Array(6).fill('⬜ Pendente'), obs:'', perfil:perfil});
+    }
+  }
+  persist(true); renderCards(); renderCadList();
+  // reset form
+  cadIdx=-1;
+  ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário';
+  document.getElementById('cadAv').textContent='?';
+  document.getElementById('cadAv').classList.remove('filled');
+  document.getElementById('cadPreviewName').textContent='Novo estagiário';
+  document.getElementById('cadPreviewSub').textContent='Preencha o nome para começar';
   var b=document.getElementById('cadSavedLbl'); b.classList.add('show'); setTimeout(function(){b.classList.remove('show');},2500);
 }
+function selectCad(idx){ loadEditCad(idx); }
 
 // ── TRILHAS ────────────────────────────────────────────────────────────────
 function renderTrilha(){
@@ -739,7 +864,7 @@ function goPage(id){
   document.querySelectorAll('.nav-item[data-page="'+id+'"],.bn-item[data-page="'+id+'"]').forEach(function(el){el.classList.add('active');});
   if(id==='estagiarios') renderCards();
   if(id==='trilhas') renderTrilha();
-  if(id==='cadastro'){ cadIdx=-1; renderCadChips(); document.getElementById('cadForm').style.display='none'; document.getElementById('cadDesc').textContent=editor?'Selecione um estagiário para editar.':'Selecione um estagiário para visualizar.'; }
+  if(id==='cadastro'){ cadIdx=-1; document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário'; ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';}); updateCadPreview(); renderCadList(); }
 }
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
@@ -763,7 +888,7 @@ function applyMode(){
   }
   renderCards();
   if(panelIdx>=0){ document.getElementById('obsTA').disabled=!editor; document.getElementById('btnObs').disabled=!editor; document.getElementById('obsHint').textContent=editor?'Salvo localmente no navegador.':'Entre como tutora para editar.'; }
-  if(cadIdx>=0) selectCad(cadIdx);
+
 }
 
 // ── EVENT LISTENERS ────────────────────────────────────────────────────────
@@ -806,9 +931,17 @@ document.addEventListener('DOMContentLoaded', function(){
     var b=document.getElementById('obsSaved'); b.classList.add('show'); setTimeout(function(){b.classList.remove('show');},2000);
   });
 
-  // Cadastro save
-  document.getElementById('cadSaveBtn').addEventListener('click', savePerfil);
+  // Cadastro
+  document.getElementById('cadAddBtn').addEventListener('click', savePerfil);
   document.getElementById('cadFunc').addEventListener('input', function(){ this.value=this.value.replace(/[^0-9]/g,'').slice(0,9); });
+  document.getElementById('cadNome').addEventListener('input', updateCadPreview);
+  // lock inputs if viewer
+  function setCadInputState(){
+    var dis=!editor;
+    ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){ var el=document.getElementById(id); if(el) el.disabled=dis; });
+    var btn=document.getElementById('cadAddBtn'); if(btn) btn.disabled=dis;
+  }
+  setCadInputState();
 
   // Rename
   document.getElementById('btnConfirmRename').addEventListener('click', function(){
@@ -822,7 +955,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('renameIn').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('btnConfirmRename').click(); if(e.key==='Escape') document.getElementById('renameOv').classList.remove('open'); });
 
   // Init
-  updateMetrics(); renderCiclos(); renderCards(); renderTrilha(); updateProgress();
+  updateMetrics(); renderCiclos(); renderCards(); renderTrilha(); renderCadList(); updateProgress();
 });
 
 })();
