@@ -47,15 +47,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .mobile-mode-btn.on{background:var(--or);color:#fff;border-color:var(--or);}
 
 /* ── BOTTOM NAV ── */
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--nb);background:var(--surface);border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 16px rgba(0,0,0,.08);}
-.bn-items{display:grid;grid-template-columns:repeat(4,1fr);height:100%;padding:6px 8px;}
-.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:12px;transition:background .15s;-webkit-tap-highlight-color:transparent;}
-.bn-item:active{background:var(--or-l);}
-.bn-item.active{background:var(--or-l);}
-.bn-item.active .bn-icon{color:var(--or);}
-.bn-item.active .bn-lbl{color:var(--or);font-weight:500;}
-.bn-icon{font-size:20px;color:var(--ink3);line-height:1;transition:color .15s;}
-.bn-lbl{font-size:11px;color:var(--ink3);transition:color .15s;text-align:center;line-height:1.2;}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--nb);background:var(--surface);border-top:1px solid var(--border);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,.07);}
+.bn-items{display:flex;flex-direction:row;align-items:stretch;height:100%;}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .12s;}
+.bn-item:active{opacity:.6;}
+.bn-icon{display:flex;align-items:center;justify-content:center;}
+.bn-icon svg{width:24px;height:24px;stroke:var(--ink3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .15s;}
+.bn-item.active .bn-icon svg{stroke:var(--or);}
+.bn-lbl{font-size:10.5px;color:var(--ink3);transition:color .15s;text-align:center;line-height:1;font-weight:400;}
+.bn-item.active .bn-lbl{color:var(--or);font-weight:600;}
 
 /* ── MAIN ── */
 .main{flex:1;overflow-x:hidden;}
@@ -436,22 +436,35 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <div class="bn-items">
+
     <div class="bn-item active" data-page="overview">
-      <span class="bn-icon">◈</span>
+      <div class="bn-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </div>
       <span class="bn-lbl">Visão geral</span>
     </div>
+
     <div class="bn-item" data-page="estagiarios">
-      <span class="bn-icon">◎</span>
+      <div class="bn-icon">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3.5"/><path d="M2 20c0-4 3.1-7 7-7s7 3 7 7"/><circle cx="18" cy="8" r="2.5"/><path d="M22 20c0-3-2-5-4-5"/></svg>
+      </div>
       <span class="bn-lbl">Estagiários</span>
     </div>
+
     <div class="bn-item" data-page="cadastro">
-      <span class="bn-icon">◫</span>
+      <div class="bn-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
       <span class="bn-lbl">Cadastro</span>
     </div>
+
     <div class="bn-item" data-page="trilhas">
-      <span class="bn-icon">◑</span>
+      <div class="bn-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/><circle cx="19" cy="18" r="2.5"/></svg>
+      </div>
       <span class="bn-lbl">Trilhas</span>
     </div>
+
   </div>
 </nav>
 
@@ -864,7 +877,7 @@ function goPage(id){
   document.querySelectorAll('.nav-item[data-page="'+id+'"],.bn-item[data-page="'+id+'"]').forEach(function(el){el.classList.add('active');});
   if(id==='estagiarios') renderCards();
   if(id==='trilhas') renderTrilha();
-  if(id==='cadastro'){ cadIdx=-1; document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário'; ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';}); updateCadPreview(); renderCadList(); }
+  if(id==='cadastro'){ cadIdx=-1; document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário'; ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';}); updateCadPreview(); setCadInputState(); renderCadList(); }
 }
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
@@ -874,6 +887,13 @@ function doLogin(){
   if(document.getElementById('loginPwd').value===PWD){
     editor=true; document.getElementById('loginOv').classList.remove('open'); applyMode();
   } else { document.getElementById('loginErr').classList.add('show'); document.getElementById('loginPwd').value=''; document.getElementById('loginPwd').focus(); }
+}
+function setCadInputState(){
+  var dis=!editor;
+  ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.disabled=dis;
+  });
+  var btn=document.getElementById('cadAddBtn'); if(btn) btn.disabled=dis;
 }
 function applyMode(){
   var btn=document.getElementById('modeBtn'), mbtn=document.getElementById('mobileModeBtn'), banner=document.getElementById('banner');
@@ -887,8 +907,8 @@ function applyMode(){
     banner.classList.remove('gone');
   }
   renderCards();
+  setCadInputState();
   if(panelIdx>=0){ document.getElementById('obsTA').disabled=!editor; document.getElementById('btnObs').disabled=!editor; document.getElementById('obsHint').textContent=editor?'Salvo localmente no navegador.':'Entre como tutora para editar.'; }
-
 }
 
 // ── EVENT LISTENERS ────────────────────────────────────────────────────────
@@ -935,12 +955,6 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('cadAddBtn').addEventListener('click', savePerfil);
   document.getElementById('cadFunc').addEventListener('input', function(){ this.value=this.value.replace(/[^0-9]/g,'').slice(0,9); });
   document.getElementById('cadNome').addEventListener('input', updateCadPreview);
-  // lock inputs if viewer
-  function setCadInputState(){
-    var dis=!editor;
-    ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){ var el=document.getElementById(id); if(el) el.disabled=dis; });
-    var btn=document.getElementById('cadAddBtn'); if(btn) btn.disabled=dis;
-  }
   setCadInputState();
 
   // Rename
