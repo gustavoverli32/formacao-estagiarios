@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Formação de Estagiários 2.0 — Itaú</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -788,14 +789,22 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
   </div>
 </div>
 
-<div class="toast" id="toast"><span class="tdot"></span>Salvo com sucesso</div>
+<div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.92);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+  <div style="width:40px;height:40px;border:3px solid var(--or-l);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;"></div>
+  <div style="font-size:14px;color:var(--ink2);font-weight:500;">Carregando dados...</div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<div class="toast"  id="toast"><span class="tdot"></span>Salvo com sucesso</div>
 
 <script>
 (function(){
 
 // ── CONSTANTS ──────────────────────────────────────────────────────────────
-var SK = 'formacao_itau_v12';
 var PWD = 'kamilla2025';
+var SUPA_URL = 'https://hbebkripmytkknqydjpt.supabase.co';
+var SUPA_KEY = 'sb_publishable_PjzxYcSPxCwSjeGB-Jzk3g_1632xWIH';
+var sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 var SOPTS = ['⬜ Pendente','🔄 Em andamento','✅ Concluído','⚠️ Atenção','🔁 Renovado'];
 var ML = ['Mês 1','Mês 2','Mês 3','Mês 4','Mês 5','Mês 6'];
 
@@ -861,11 +870,54 @@ var TRILHAS = {
 };
 
 // ── STATE ──────────────────────────────────────────────────────────────────
-function mkEst(i){ return {nome:'Estagiário '+(i+1), meses:Array(6).fill('⬜ Pendente'), obs:'', atencao:false, perfil:{idade:'',funcional:'',inicio:''}, trilhaChecks:{}}; }
-function defState(){ return {ests:Array.from({length:10},function(_,i){return mkEst(i);}), semanas:Array(4).fill('⬜ Pendente'), tl:Array(6).fill(false), conteudos:[]}; }
-var S = (function(){
-  try{ var s=localStorage.getItem(SK); if(s){ var p=JSON.parse(s); p.ests.forEach(function(e){ if(!e.perfil) e.perfil={idade:'',funcional:'',inicio:''}; if(!e.obs) e.obs=''; if(!e.trilhaChecks) e.trilhaChecks={}; if(e.atencao===undefined) e.atencao=false; }); if(!p.tl) p.tl=Array(6).fill(false); if(!p.conteudos) p.conteudos=[]; return p; } return defState(); }catch(e){return defState();}
-})();
+var S = { ests:[], tl:Array(6).fill(false), conteudos:[] };
+var DB_LOADED = false;
+
+function mkEstObj(row){
+  return {
+    id:           row.id,
+    nome:         row.nome || 'Estagiário',
+    meses:        row.meses || Array(6).fill('⬜ Pendente'),
+    obs:          row.obs || '',
+    atencao:      row.atencao || false,
+    perfil:       row.perfil || {idade:'',funcional:'',inicio:''},
+    trilhaChecks: row.trilha_checks || {}
+  };
+}
+
+async function loadFromDB(){
+  showLoading(true);
+  try {
+    // Load estagiarios
+    var r1 = await sb.from('estagiarios').select('*').order('created_at');
+    if(r1.error) throw r1.error;
+    S.ests = (r1.data||[]).map(mkEstObj);
+
+    // Load conteudos
+    var r2 = await sb.from('conteudos').select('*').order('created_at');
+    if(r2.error) throw r2.error;
+    S.conteudos = (r2.data||[]).map(function(c){
+      return {id:c.id, titulo:c.titulo, trilha:c.trilha, desc:c.descricao||'', imgs:c.imgs||[]};
+    });
+
+    // Load timeline
+    var r3 = await sb.from('configuracoes').select('*').eq('id','timeline').single();
+    if(r3.data) S.tl = r3.data.valor;
+
+    DB_LOADED = true;
+  } catch(e) {
+    console.error('Erro ao carregar dados:', e);
+    showToast('Erro ao conectar. Tente recarregar.', true);
+  }
+  showLoading(false);
+  updateMetrics(); renderCiclos(); renderCards(); renderTrilha();
+  renderCadList(); renderTimeline(); renderConteudos(); updateProgress();
+}
+
+function showLoading(on){
+  var el = document.getElementById('loadingOverlay');
+  if(el) el.style.display = on ? 'flex' : 'none';
+}
 
 var activeConteudoPage = 'iniciante';
 var TRILHA_INFO = {
@@ -918,7 +970,9 @@ function renderConteudoPage(){
   }).join('');
   el.querySelectorAll('[data-realdel]').forEach(function(btn){
     btn.addEventListener('click', function(){
+      var delId = S.conteudos[parseInt(this.dataset.realdel)].id;
       S.conteudos.splice(parseInt(this.dataset.realdel),1);
+      if(delId) deleteConteudo(delId);
       persist(true); renderConteudoPage();
     });
   });
@@ -949,10 +1003,54 @@ function renderConteudoPage(){
 var editor=false, panelIdx=-1, cadIdx=-1, renameIdx=-1, activeTrilha='iniciante', activeConteudoTab='iniciante', editandoConteudoIdx=-1;
 
 // ── PERSIST ────────────────────────────────────────────────────────────────
-function persist(silent){
-  localStorage.setItem(SK,JSON.stringify(S));
-  if(!silent) showToast();
+// persist is now async — call with await or fire-and-forget
+function persist(silent){ persistAsync(silent); }
+
+async function persistAsync(silent){
   updateMetrics(); renderCiclos(); updateProgress();
+  if(!silent) showToast();
+}
+
+// ── Specific savers ────────────────────────────────────────────────────────
+async function saveEstagiario(est){
+  var data = {
+    nome:          est.nome,
+    meses:         est.meses,
+    obs:           est.obs,
+    atencao:       est.atencao,
+    perfil:        est.perfil,
+    trilha_checks: est.trilhaChecks||{}
+  };
+  if(est.id){
+    var r = await sb.from('estagiarios').update(data).eq('id', est.id);
+    if(r.error){ console.error('saveEstagiario:', r.error); showToast('Erro ao salvar.', true); return; }
+  } else {
+    var r = await sb.from('estagiarios').insert(data).select().single();
+    if(r.error){ console.error('saveEstagiario:', r.error); showToast('Erro ao salvar.', true); return; }
+    est.id = r.data.id;
+  }
+}
+
+async function saveConteudo(c){
+  var data = {titulo:c.titulo, trilha:c.trilha, descricao:c.desc||'', imgs:c.imgs||[]};
+  if(c.id){
+    await sb.from('conteudos').update(data).eq('id', c.id);
+  } else {
+    var r = await sb.from('conteudos').insert(data).select().single();
+    if(!r.error && r.data) c.id = r.data.id;
+  }
+}
+
+async function deleteConteudo(id){
+  await sb.from('conteudos').delete().eq('id', id);
+}
+
+async function deleteEstagiario(id){
+  await sb.from('estagiarios').delete().eq('id', id);
+}
+
+async function saveTimeline(){
+  await sb.from('configuracoes').upsert({id:'timeline', valor:S.tl});
 }
 function showToast(){ var t=document.getElementById('toast'); t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},2000); }
 
@@ -1137,6 +1235,7 @@ function renderTimeline(){
       var idx = parseInt(this.dataset.tl);
       if(!S.tl) S.tl = Array(6).fill(false);
       S.tl[idx] = !S.tl[idx];
+      saveTimeline();
       persist(true);
       renderTimeline();
     });
@@ -1233,7 +1332,7 @@ function renderPanelTrilha(idx){
       if(!S.ests[estIdx].trilhaChecks) S.ests[estIdx].trilhaChecks = {};
       if(!S.ests[estIdx].trilhaChecks[ck]) S.ests[estIdx].trilhaChecks[ck] = Array(t2.topicos[topicoIdx].checks.length).fill(false);
       S.ests[estIdx].trilhaChecks[ck][checkIdx] = this.checked;
-      persist(true);
+      saveEstagiario(S.ests[estIdx]); persist(true);
       renderPanelTrilha(estIdx);
     });
   });
@@ -1384,6 +1483,7 @@ function savePerfil(){
       S.ests.push({nome:nome, meses:Array(6).fill('⬜ Pendente'), obs:'', perfil:perfil});
     }
   }
+  saveEstagiario(cadIdx>=0 ? S.ests[cadIdx] : S.ests[S.ests.length-1]);
   persist(true); renderCards(); renderCadList();
   // reset form
   cadIdx=-1;
@@ -1556,7 +1656,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('btnAtencao').addEventListener('click', function(){
     if(!editor || panelIdx < 0) return;
     S.ests[panelIdx].atencao = !S.ests[panelIdx].atencao;
-    persist(true);
+    saveEstagiario(S.ests[panelIdx]); persist(true);
     updateAtencaoBtn(panelIdx);
     renderCards();
   });
@@ -1595,14 +1695,15 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!desc)  { document.getElementById('cDescR').focus(); return; }
     if(!S.conteudos) S.conteudos=[];
     if(editandoConteudoIdx >= 0){
-      // Update existing
       S.conteudos[editandoConteudoIdx].titulo = titulo;
       S.conteudos[editandoConteudoIdx].desc   = desc;
       S.conteudos[editandoConteudoIdx].imgs   = (editorImages['cDescR']||[]).slice();
+      saveConteudo(S.conteudos[editandoConteudoIdx]);
       editandoConteudoIdx = -1;
     } else {
-      // New content
-      S.conteudos.push({titulo:titulo, trilha:activeConteudoPage, desc:desc, imgs:editorImages['cDescR']||[]});
+      var nc = {titulo:titulo, trilha:activeConteudoPage, desc:desc, imgs:editorImages['cDescR']||[]};
+      S.conteudos.push(nc);
+      saveConteudo(nc);
     }
     editorImages['cDescR']=[];
     renderImgPreview('cDescR');
@@ -1646,7 +1747,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('btnObs').addEventListener('click', function(){
     if(!editor||panelIdx<0) return;
     S.ests[panelIdx].obs=document.getElementById('obsTA').value;
-    persist(true);
+    saveEstagiario(S.ests[panelIdx]); persist(true);
     var b=document.getElementById('obsSaved'); b.classList.add('show'); setTimeout(function(){b.classList.remove('show');},2000);
   });
 
@@ -1667,9 +1768,9 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('btnCancelRename').addEventListener('click', function(){ document.getElementById('renameOv').classList.remove('open'); });
   document.getElementById('renameIn').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('btnConfirmRename').click(); if(e.key==='Escape') document.getElementById('renameOv').classList.remove('open'); });
 
-  // Init
-  updateMetrics(); renderCiclos(); renderCards(); renderTrilha(); renderCadList(); renderTimeline(); renderConteudos(); updateProgress();
+  // Init — load from Supabase
   setupImgInput('cDesc'); setupImgInput('cDescR');
+  loadFromDB();
 });
 
 
