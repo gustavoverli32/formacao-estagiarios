@@ -229,6 +229,61 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   .cad-single-header,.cad-single-footer,.cad-single-fields{padding-left:16px;padding-right:16px;}
 }
 
+
+/* ── ATENÇÃO BADGE ── */
+.nc-atencao{display:inline-flex;align-items:center;gap:4px;background:#FEF9C3;color:#713F12;border:1px solid #FDE047;border-radius:20px;font-size:11px;font-weight:600;padding:2px 8px;flex-shrink:0;}
+.nc-atencao-dot{width:6px;height:6px;border-radius:50%;background:#EAB308;flex-shrink:0;}
+.btn-atencao{font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;padding:8px 16px;border-radius:var(--r2);border:1.5px solid #FDE047;background:#FEF9C3;color:#713F12;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:6px;}
+.btn-atencao:hover{background:#FEF08A;border-color:#EAB308;}
+.btn-atencao.ativo{background:#EAB308;color:#fff;border-color:#EAB308;}
+.btn-atencao.ativo:hover{background:#CA8A04;}
+/* ── CONTEÚDOS ── */
+.conteudo-trilha-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);font-weight:500;margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+.conteudo-trilha-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.conteudo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;box-shadow:var(--sh);transition:border-color .15s;}
+.conteudo-card:hover{border-color:var(--or-m);}
+.conteudo-card-top{display:flex;align-items:flex-start;gap:12px;}
+.conteudo-trilha-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.conteudo-titulo{font-size:14px;font-weight:500;color:var(--ink);flex:1;line-height:1.4;}
+.conteudo-desc{font-size:12.5px;color:var(--ink2);margin-top:6px;line-height:1.6;}
+.conteudo-link{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:12.5px;color:var(--or);font-weight:500;text-decoration:none;transition:color .12s;}
+.conteudo-link:hover{color:var(--or-d);}
+.conteudo-link-icon{font-size:12px;}
+.conteudo-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0;}
+.btn-del-conteudo{background:none;border:none;font-size:14px;color:var(--ink3);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .12s;}
+.btn-del-conteudo:hover{color:#DC2626;}
+.add-conteudo-form{background:var(--surface);border:1.5px dashed var(--border2);border-radius:var(--r);padding:20px;margin-top:12px;}
+.add-conteudo-form.hidden{display:none;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.form-row.full{grid-template-columns:1fr;}
+.add-conteudo-footer{display:flex;gap:8px;margin-top:14px;align-items:center;}
+.btn-add-content{padding:8px 18px;background:var(--or);color:#fff;border:none;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;}
+.btn-add-content:hover{background:var(--or-d);}
+.btn-cancel-content{padding:8px 14px;background:transparent;color:var(--ink2);border:1px solid var(--border2);border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.btn-show-add{display:inline-flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--or);background:var(--or-l);border:1px solid rgba(236,112,0,.2);border-radius:var(--r2);padding:8px 16px;cursor:pointer;transition:background .12s;margin-top:8px;}
+.btn-show-add:hover{background:var(--or-mid);}
+@media(max-width:768px){.form-row{grid-template-columns:1fr;}}
+
+
+/* ── RICH EDITOR ── */
+.rich-editor-wrap{border:1.5px solid var(--border2);border-radius:var(--r2);overflow:hidden;transition:border-color .15s;}
+.rich-editor-wrap:focus-within{border-color:var(--or);box-shadow:0 0 0 3px rgba(236,112,0,.12);}
+.rich-toolbar{display:flex;align-items:center;gap:2px;padding:6px 8px;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.rtb-btn{display:flex;align-items:center;justify-content:center;width:30px;height:28px;border-radius:5px;border:none;background:transparent;color:var(--ink2);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;transition:background .12s,color .12s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+.rtb-btn:hover{background:var(--surface);color:var(--ink);}
+.rtb-btn.active{background:var(--or-l);color:var(--or-d);}
+.rtb-sep{width:1px;height:18px;background:var(--border);margin:0 3px;flex-shrink:0;}
+.rtb-emoji-wrap{position:relative;}
+.rtb-emoji-picker{display:none;position:absolute;top:34px;left:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:50;width:220px;flex-wrap:wrap;gap:4px;}
+.rtb-emoji-picker.open{display:flex;}
+.rtb-emoji-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:3px;border-radius:4px;transition:background .1s;-webkit-tap-highlight-color:transparent;}
+.rtb-emoji-btn:hover{background:var(--bg);}
+.rich-textarea{width:100%;padding:12px;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);resize:vertical;min-height:140px;line-height:1.7;-webkit-appearance:none;}
+.rich-img-preview{padding:8px 12px;background:var(--bg);border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;}
+.rich-img-thumb{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--border);}
+.rich-img-thumb-wrap{position:relative;}
+.rich-img-del{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+
 /* ── TRILHAS ── */
 .trilha-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
 .trilha-tab{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:20px;border:1.5px solid var(--border2);background:var(--surface);color:var(--ink2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
@@ -415,27 +470,126 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 
   <!-- OVERVIEW -->
   <section id="page-overview" class="page active">
-    <div class="ph"><h1>Visão <em>geral</em></h1><p>Tutora Regional: Kamilla &nbsp;·&nbsp; Líder: Gustavo &nbsp;·&nbsp; 6 meses &nbsp;·&nbsp; 3 ciclos de desenvolvimento</p></div>
-    <div class="banner" id="banner">Modo visualização — somente a tutora pode editar.<button class="banner-btn" id="bannerBtn">Entrar</button></div>
-    <div class="metrics">
-      <div class="mc ac"><div class="lbl">Estagiários</div><div class="val" id="mTotal">10</div><div class="hint">ativos</div></div>
-      <div class="mc"><div class="lbl">Concluídos</div><div class="val" id="mDone">0</div><div class="hint">meses</div></div>
-      <div class="mc lt"><div class="lbl">Andamento</div><div class="val" id="mActive">0</div><div class="hint">em execução</div></div>
-      <div class="mc lt"><div class="lbl">Atenção</div><div class="val" id="mWarn">0</div><div class="hint">especial</div></div>
+    <div class="ph">
+      <h1>Visão <em>geral</em></h1>
+      <p>Tutora Regional: Kamilla &nbsp;·&nbsp; Líder: Gustavo &nbsp;·&nbsp; 6 meses &nbsp;·&nbsp; 3 ciclos</p>
     </div>
-    <div class="card" style="margin-bottom:18px;">
+
+    <div class="banner" id="banner">
+      Modo visualização — somente a tutora pode editar.
+      <button class="banner-btn" id="bannerBtn">Entrar</button>
+    </div>
+
+    <!-- Linha do tempo -->
+    <div class="card" style="margin-bottom:16px;">
       <div class="card-ttl">Linha do tempo — clique para marcar como executado</div>
       <div class="tline" id="timelineGrid"></div>
-      <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;align-items:center;">
+      <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;align-items:center;">
         <span style="font-size:11px;color:var(--or);font-weight:500;">● Ciclo 1</span>
         <span style="font-size:11px;color:var(--or-d);font-weight:500;">● Ciclo 2</span>
         <span style="font-size:11px;color:#92400E;font-weight:500;">● Ciclo 3</span>
         <span style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink3);">
-          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#16A34A;"></span>Executado
-          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--or-l);border:1px solid #F5C49A;margin-left:6px;"></span>Pendente
+          <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#16A34A;"></span>Executado
+          <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--or-l);border:1px solid #F5C49A;margin-left:6px;"></span>Pendente
         </span>
       </div>
     </div>
+
+    <!-- Trilhas resumo + conteudos -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-ttl" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Conteúdos por trilha</span>
+        <button class="btn-show-add" id="btnShowAddConteudo" style="display:none;padding:5px 12px;font-size:12px;">+ Adicionar</button>
+      </div>
+
+      <!-- Trilha access cards -->
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+
+        <div class="trilha-access-card" data-tab="iniciante" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:8px;border:1px solid rgba(236,112,0,.25);background:var(--or-l);cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+          
+          <div style="flex:1;">
+            <div style="font-size:13.5px;font-weight:600;color:#EC7000;margin-bottom:2px;">Trilha Iniciante</div>
+            <div style="font-size:12px;color:var(--ink2);">Base e segurança · Integração e conhecimento do banco</div>
+          </div>
+          <div style="font-size:18px;color:#EC7000;font-weight:300;">›</div>
+        </div>
+
+        <div class="trilha-access-card" data-tab="intermediario" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:8px;border:1px solid rgba(180,83,9,.25);background:#FEF3C7;cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+          
+          <div style="flex:1;">
+            <div style="font-size:13.5px;font-weight:600;color:#B45309;margin-bottom:2px;">Trilha Intermediária</div>
+            <div style="font-size:12px;color:var(--ink2);">Desenvolvimento · Participação ativa e postura profissional</div>
+          </div>
+          <div style="font-size:18px;color:#B45309;font-weight:300;">›</div>
+        </div>
+
+        <div class="trilha-access-card" data-tab="avancado" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:8px;border:1px solid rgba(22,101,52,.25);background:#DCFCE7;cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+          
+          <div style="flex:1;">
+            <div style="font-size:13.5px;font-weight:600;color:#166534;margin-bottom:2px;">Trilha Avançada</div>
+            <div style="font-size:12px;color:var(--ink2);">Protagonismo · Mini projetos, autonomia e visão de futuro</div>
+          </div>
+          <div style="font-size:18px;color:#166534;font-weight:300;">›</div>
+        </div>
+
+      </div>
+
+      <!-- hidden conteudosList still needed for renderConteudos compat -->
+      <div id="conteudosList" style="display:none;"></div>
+
+      <!-- Add form (tutora only) -->
+      <div id="addConteudoWrap" style="display:none;background:var(--bg);border:1.5px dashed var(--border2);border-radius:var(--r);padding:18px;margin-top:12px;">
+        <div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:14px;">Novo conteúdo</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="field-grp">
+            <div class="field-lbl">Título</div>
+            <input class="field-in" type="text" id="cTitulo" placeholder="Ex: Como funciona o Portfólio Itaú" maxlength="100">
+          </div>
+          <div class="field-grp">
+            <div class="field-lbl">Trilha</div>
+            <select class="field-in" id="cTrilha">
+              <option value="iniciante">1 a 3 meses — Iniciante</option>
+              <option value="intermediario">3 a 6 meses — Intermediária</option>
+              <option value="avancado">Acima de 6 meses — Avançada</option>
+            </select>
+          </div>
+<div class="field-grp">
+            <div class="field-lbl" style="display:flex;align-items:center;justify-content:space-between;">
+              Conteúdo / Instruções
+            </div>
+            <div class="rich-editor-wrap" id="wrap_cDesc">
+              <div class="rich-toolbar">
+                <button class="rtb-btn" title="Negrito" onclick="fmtText('cDesc','bold')"><b>B</b></button>
+                <button class="rtb-btn" title="Itálico" onclick="fmtText('cDesc','italic')"><i>I</i></button>
+                <button class="rtb-btn" title="Sublinhado" onclick="fmtText('cDesc','underline')"><u>U</u></button>
+                <div class="rtb-sep"></div>
+                <button class="rtb-btn" title="Título" onclick="fmtText('cDesc','heading')">H</button>
+                <button class="rtb-btn" title="Lista com marcadores" onclick="fmtText('cDesc','ul')">☰</button>
+                <button class="rtb-btn" title="Lista numerada" onclick="fmtText('cDesc','ol')">1.</button>
+                <div class="rtb-sep"></div>
+                <div class="rtb-emoji-wrap">
+                  <button class="rtb-btn" title="Emojis" onclick="toggleEmoji('cDesc')">☺</button>
+                  <div class="rtb-emoji-picker" id="emoji_cDesc">
+                    <button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','✅')">✅</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','⚠️')">⚠️</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📌')">📌</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🎯')">🎯</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','💡')">💡</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📚')">📚</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🔵')">🔵</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🟠')">🟠</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🟢')">🟢</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','⭐')">⭐</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','👍')">👍</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🚀')">🚀</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📝')">📝</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🔑')">🔑</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','💼')">💼</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📊')">📊</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📋')">📋</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🏦')">🏦</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','💰')">💰</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🤝')">🤝</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','👥')">👥</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','📞')">📞</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','✏️')">✏️</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDesc','🔍')">🔍</button>
+                  </div>
+                </div>
+                <div class="rtb-sep"></div>
+                <button class="rtb-btn" title="Inserir imagem" onclick="document.getElementById('imgInput_cDesc').click()">🖼</button>
+                <input type="file" id="imgInput_cDesc" accept="image/*" style="display:none;" multiple>
+              </div>
+              <textarea class="rich-textarea" id="cDesc" rows="5" placeholder="Escreva aqui as instruções para os estagiários..."></textarea>
+              <div class="rich-img-preview" id="imgPreview_cDesc" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <button class="btn-add-content" id="btnSaveConteudo">Salvar</button>
+          <button class="btn-cancel-content" id="btnCancelConteudo">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alertas -->
     <div class="card">
       <div class="card-ttl">Alertas e boas práticas</div>
       <div class="agrid">
@@ -447,6 +601,62 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
         <div class="arow good"><span class="aicon">✓</span>Estagiário nunca estará sozinho</div>
       </div>
     </div>
+
+  </section>
+
+
+  <!-- CONTEUDO READER -->
+  <section id="page-conteudo" class="page">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <button id="btnBackConteudo" style="display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink2);cursor:pointer;transition:border-color .12s;-webkit-tap-highlight-color:transparent;">
+        ‹ Voltar
+      </button>
+      <div id="conteudoPageBadge" style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;"></div>
+    </div>
+    <div class="ph" style="margin-bottom:20px;">
+      <h1 id="conteudoPageTitle" style="font-size:24px;"></h1>
+      <p id="conteudoPageSub"></p>
+    </div>
+    <div id="conteudoPageList"></div>
+    <div id="addConteudoWrapReader" style="display:none;background:var(--bg);border:1.5px dashed var(--border2);border-radius:var(--r);padding:18px;margin-top:20px;">
+      <div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:14px;">Novo conteúdo</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="field-grp"><div class="field-lbl">Título</div><input class="field-in" type="text" id="cTituloR" placeholder="Ex: Como funciona o Portfólio Itaú" maxlength="100"></div>
+        <div class="field-grp">
+            <div class="field-lbl" style="display:flex;align-items:center;justify-content:space-between;">
+              Conteúdo / Instruções
+            </div>
+            <div class="rich-editor-wrap" id="wrap_cDescR">
+              <div class="rich-toolbar">
+                <button class="rtb-btn" title="Negrito" onclick="fmtText('cDescR','bold')"><b>B</b></button>
+                <button class="rtb-btn" title="Itálico" onclick="fmtText('cDescR','italic')"><i>I</i></button>
+                <button class="rtb-btn" title="Sublinhado" onclick="fmtText('cDescR','underline')"><u>U</u></button>
+                <div class="rtb-sep"></div>
+                <button class="rtb-btn" title="Título" onclick="fmtText('cDescR','heading')">H</button>
+                <button class="rtb-btn" title="Lista com marcadores" onclick="fmtText('cDescR','ul')">☰</button>
+                <button class="rtb-btn" title="Lista numerada" onclick="fmtText('cDescR','ol')">1.</button>
+                <div class="rtb-sep"></div>
+                <div class="rtb-emoji-wrap">
+                  <button class="rtb-btn" title="Emojis" onclick="toggleEmoji('cDescR')">☺</button>
+                  <div class="rtb-emoji-picker" id="emoji_cDescR">
+                    <button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','✅')">✅</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','⚠️')">⚠️</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📌')">📌</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🎯')">🎯</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','💡')">💡</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📚')">📚</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🔵')">🔵</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🟠')">🟠</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🟢')">🟢</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','⭐')">⭐</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','👍')">👍</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🚀')">🚀</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📝')">📝</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🔑')">🔑</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','💼')">💼</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📊')">📊</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📋')">📋</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🏦')">🏦</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','💰')">💰</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🤝')">🤝</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','👥')">👥</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','📞')">📞</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','✏️')">✏️</button><button class="rtb-emoji-btn" onclick="insertEmoji('cDescR','🔍')">🔍</button>
+                  </div>
+                </div>
+                <div class="rtb-sep"></div>
+                <button class="rtb-btn" title="Inserir imagem" onclick="document.getElementById('imgInput_cDescR').click()">🖼</button>
+                <input type="file" id="imgInput_cDescR" accept="image/*" style="display:none;" multiple>
+              </div>
+              <textarea class="rich-textarea" id="cDescR" rows="6" placeholder="Escreva aqui as instruções para os estagiários..."></textarea>
+              <div class="rich-img-preview" id="imgPreview_cDescR" style="display:none;"></div>
+            </div>
+          </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn-add-content" id="btnSaveConteudoR">Salvar</button>
+        <button class="btn-cancel-content" id="btnCancelConteudoR">Cancelar</button>
+      </div>
+    </div>
+    <button class="btn-show-add" id="btnShowAddConteudoR" style="display:none;margin-top:16px;">+ Adicionar conteúdo</button>
   </section>
 
   <!-- ACOMPANHAMENTO -->
@@ -530,7 +740,17 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
       <div class="prow"><span class="prow-lbl">Início</span><span class="prow-val" id="pInicio">—</span></div>
       <div class="prow"><span class="prow-lbl">Tempo no programa</span><span class="prow-val" id="pTempo">—</span></div>
     </div>
-    <div class="psec"><div class="psec-ttl">Status por mês</div><div class="pmeses" id="pMeses"></div></div>
+    <div class="psec">
+      <div class="psec-ttl">Trilha de aprendizado</div>
+      <div id="pTrilha"></div>
+    </div>
+    <div class="psec">
+      <div class="psec-ttl">Marcação de atenção</div>
+      <button class="btn-atencao" id="btnAtencao" disabled>
+        <span>⚠</span><span id="btnAtencaoTxt">Marcar como atenção</span>
+      </button>
+      <div style="font-size:11.5px;color:var(--ink3);margin-top:7px;" id="atencaoHint">Entre como tutora para alterar.</div>
+    </div>
     <div class="psec">
       <div class="psec-ttl">Observações</div>
       <textarea class="obs" id="obsTA" placeholder="Anotações sobre este estagiário..." disabled></textarea>
@@ -641,12 +861,92 @@ var TRILHAS = {
 };
 
 // ── STATE ──────────────────────────────────────────────────────────────────
-function mkEst(i){ return {nome:'Estagiário '+(i+1), meses:Array(6).fill('⬜ Pendente'), obs:'', perfil:{idade:'',funcional:'',inicio:''}}; }
-function defState(){ return {ests:Array.from({length:10},function(_,i){return mkEst(i);}), semanas:Array(4).fill('⬜ Pendente'), tl:Array(6).fill(false)}; }
+function mkEst(i){ return {nome:'Estagiário '+(i+1), meses:Array(6).fill('⬜ Pendente'), obs:'', atencao:false, perfil:{idade:'',funcional:'',inicio:''}, trilhaChecks:{}}; }
+function defState(){ return {ests:Array.from({length:10},function(_,i){return mkEst(i);}), semanas:Array(4).fill('⬜ Pendente'), tl:Array(6).fill(false), conteudos:[]}; }
 var S = (function(){
-  try{ var s=localStorage.getItem(SK); if(s){ var p=JSON.parse(s); p.ests.forEach(function(e){ if(!e.perfil) e.perfil={idade:'',funcional:'',inicio:''}; if(!e.obs) e.obs=''; }); if(!p.tl) p.tl=Array(6).fill(false); return p; } return defState(); }catch(e){return defState();}
+  try{ var s=localStorage.getItem(SK); if(s){ var p=JSON.parse(s); p.ests.forEach(function(e){ if(!e.perfil) e.perfil={idade:'',funcional:'',inicio:''}; if(!e.obs) e.obs=''; if(!e.trilhaChecks) e.trilhaChecks={}; if(e.atencao===undefined) e.atencao=false; }); if(!p.tl) p.tl=Array(6).fill(false); if(!p.conteudos) p.conteudos=[]; return p; } return defState(); }catch(e){return defState();}
 })();
-var editor=false, panelIdx=-1, cadIdx=-1, renameIdx=-1, activeTrilha='iniciante';
+
+var activeConteudoPage = 'iniciante';
+var TRILHA_INFO = {
+  iniciante:     {label:'1 a 3 meses', name:'Trilha Iniciante',     cor:'#EC7000', bg:'#FFF3E8', desc:'Base e segurança — Integração, conhecimento do banco e observação guiada.'},
+  intermediario: {label:'3 a 6 meses', name:'Trilha Intermediária', cor:'#B45309', bg:'#FEF3C7', desc:'Desenvolvimento — Participação ativa em atendimentos e postura profissional.'},
+  avancado:      {label:'Acima de 6 meses', name:'Trilha Avançada', cor:'#166534', bg:'#DCFCE7', desc:'Protagonismo — Mini projetos, autonomia, carreira e avaliação final.'}
+};
+
+function openConteudoPage(tk){
+  activeConteudoPage = tk;
+  var info = TRILHA_INFO[tk];
+  var badge = document.getElementById('conteudoPageBadge');
+  if(badge){ badge.textContent=info.label; badge.style.background=info.bg; badge.style.color=info.cor; badge.style.border='1px solid '+info.cor+'40'; }
+  var titleEl = document.getElementById('conteudoPageTitle');
+  if(titleEl){ titleEl.textContent=info.name; titleEl.style.color=info.cor; }
+  var subEl = document.getElementById('conteudoPageSub');
+  if(subEl) subEl.textContent = info.desc;
+  renderConteudoPage();
+  goPage('conteudo');
+}
+
+function renderConteudoPage(){
+  var tk = activeConteudoPage;
+  var info = TRILHA_INFO[tk];
+  var el = document.getElementById('conteudoPageList');
+  if(!el) return;
+  var showAddBtn = document.getElementById('btnShowAddConteudoR');
+  if(showAddBtn) showAddBtn.style.display = editor ? 'inline-flex' : 'none';
+  var items = (S.conteudos||[]).filter(function(c){ return c.trilha===tk; });
+  if(!items.length){
+    el.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:40px;text-align:center;">'
+      +'<div style="font-size:36px;margin-bottom:14px;">📭</div>'
+      +'<div style="font-size:14px;font-weight:500;color:var(--ink2);margin-bottom:4px;">Nenhum conteúdo cadastrado</div>'
+      +'<div style="font-size:13px;color:var(--ink3);">'+(editor?'Clique em "+ Adicionar conteúdo" abaixo.':'A tutora ainda não adicionou conteúdos para esta trilha.')+'</div>'
+    +'</div>';
+    return;
+  }
+  el.innerHTML = items.map(function(c,i){
+    var realIdx = S.conteudos.indexOf(c);
+    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:14px;box-shadow:var(--sh);">'
+      +'<div style="display:flex;align-items:flex-start;gap:14px;">'
+        +'<div style="width:30px;height:30px;border-radius:50%;background:'+info.bg+';border:2px solid '+info.cor+';color:'+info.cor+';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;">'+(i+1)+'</div>'
+        +'<div style="flex:1;">'
+          +'<div style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:10px;line-height:1.3;">'+c.titulo+'</div>'
+          +(c.desc||c.imgs?'<div style="font-size:13.5px;color:var(--ink2);line-height:1.85;">'+renderContent(c.desc,c.imgs)+'</div>':'')
+        +'</div>'
+        +(editor?'<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;"><button style="background:none;border:1px solid var(--border);border-radius:5px;font-size:12px;color:var(--ink2);cursor:pointer;padding:3px 8px;white-space:nowrap;" data-realedit="'+realIdx+'">✏ Editar</button><button style="background:none;border:1px solid var(--border);border-radius:5px;font-size:12px;color:var(--ink3);cursor:pointer;padding:3px 8px;" data-realdel="'+realIdx+'">✕</button></div>':'')
+      +'</div>'
+    +'</div>';
+  }).join('');
+  el.querySelectorAll('[data-realdel]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      S.conteudos.splice(parseInt(this.dataset.realdel),1);
+      persist(true); renderConteudoPage();
+    });
+  });
+  el.querySelectorAll('[data-realedit]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = parseInt(this.dataset.realedit);
+      var c = S.conteudos[idx];
+      editandoConteudoIdx = idx;
+      // Fill form fields
+      document.getElementById('cTituloR').value = c.titulo || '';
+      document.getElementById('cDescR').value   = c.desc   || '';
+      // Load images
+      editorImages['cDescR'] = (c.imgs || []).slice();
+      renderImgPreview('cDescR');
+      // Show form
+      var wrap = document.getElementById('addConteudoWrapReader');
+      wrap.style.display = 'block';
+      // Change button label
+      var saveBtn = document.getElementById('btnSaveConteudoR');
+      if(saveBtn) saveBtn.textContent = 'Salvar alterações';
+      document.getElementById('btnShowAddConteudoR').style.display = 'none';
+      // Scroll to form
+      wrap.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+}
+
+var editor=false, panelIdx=-1, cadIdx=-1, renameIdx=-1, activeTrilha='iniciante', activeConteudoTab='iniciante', editandoConteudoIdx=-1;
 
 // ── PERSIST ────────────────────────────────────────────────────────────────
 function persist(silent){
@@ -702,9 +1002,9 @@ function currMonth(e){ for(var i=0;i<6;i++) if(e.meses[i].indexOf('Concluído')<
 function updateMetrics(){
   var done=0,active=0,warn=0;
   S.ests.forEach(function(e){ e.meses.forEach(function(s){ if(s.indexOf('Concluído')>=0||s.indexOf('Renovado')>=0) done++; else if(s.indexOf('andamento')>=0) active++; else if(s.indexOf('Atenção')>=0) warn++; }); });
-  document.getElementById('mDone').textContent=done;
-  document.getElementById('mActive').textContent=active;
-  document.getElementById('mWarn').textContent=warn;
+  var elDone=document.getElementById('mDone'); if(elDone) elDone.textContent=done;
+  var elActive=document.getElementById('mActive'); if(elActive) elActive.textContent=active;
+  var elWarn=document.getElementById('mWarn'); if(elWarn) elWarn.textContent=warn;
 }
 function updateProgress(){
   var all=S.ests.reduce(function(a,e){return a.concat(e.meses);},[]);
@@ -724,6 +1024,95 @@ function renderCiclos(){ if(!document.getElementById("ciclosBars")) return;
 }
 
 // ── CARDS ──────────────────────────────────────────────────────────────────
+
+
+var TRILHA_LABELS = {iniciante:'1–3 meses', intermediario:'3–6 meses', avancado:'+6 meses'};
+var TRILHA_CORES  = {iniciante:'#EC7000',   intermediario:'#B45309',   avancado:'#166534'};
+var TRILHA_BG     = {iniciante:'#FFF3E8',   intermediario:'#FEF3C7',   avancado:'#DCFCE7'};
+
+function renderConteudos(){
+  var el = document.getElementById('conteudosList');
+  if(!el) return;
+
+  // Show/hide add button
+  var showBtn = document.getElementById('btnShowAddConteudo');
+  if(showBtn) showBtn.style.display = editor ? 'inline-flex' : 'none';
+
+  // Update tab styles
+  var CORES = {iniciante:'#EC7000', intermediario:'#B45309', avancado:'#166534'};
+  var BGS   = {iniciante:'var(--or-l)', intermediario:'#FEF3C7', avancado:'#DCFCE7'};
+  var DESCS = {
+    iniciante: 'Base e segurança · Integração, conhecimento do banco e observação guiada de atendimentos.',
+    intermediario: 'Desenvolvimento · Participação ativa em atendimentos, postura profissional e feedback estruturado.',
+    avancado: 'Protagonismo · Mini projetos, autonomia, conversa de carreira e avaliação final.'
+  };
+
+  document.querySelectorAll('.trilha-tab-btn').forEach(function(btn){
+    var tk = btn.dataset.tab;
+    var isActive = tk === activeConteudoTab;
+    btn.style.background = isActive ? BGS[tk] : 'var(--surface)';
+    btn.style.color = isActive ? CORES[tk] : 'var(--ink3)';
+    btn.style.fontWeight = isActive ? '600' : '500';
+  });
+
+  // Update description box
+  var descBox = document.getElementById('trilhaDesc');
+  var descTxt = document.getElementById('trilhaDescTxt');
+  if(descBox && descTxt){
+    descBox.style.background = BGS[activeConteudoTab];
+    descBox.style.borderLeftColor = CORES[activeConteudoTab];
+    descTxt.textContent = DESCS[activeConteudoTab];
+  }
+
+  // Render conteudos for active tab
+  var items = (S.conteudos || []).filter(function(c){ return c.trilha === activeConteudoTab; });
+  if(!items.length){
+    el.innerHTML = '<div style="font-size:13px;color:var(--ink3);font-style:italic;padding:8px 0 4px;">'
+      + (editor ? 'Nenhum conteúdo para esta trilha. Clique em "+ Adicionar".' : 'Nenhum conteúdo disponível para esta trilha ainda.')
+      + '</div>';
+    return;
+  }
+
+  el.innerHTML = items.map(function(c){
+    var realIdx = S.conteudos.indexOf(c);
+    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;">'
+      +'<div style="display:flex;align-items:flex-start;gap:10px;">'
+        +'<div style="flex:1;">'
+          +'<div style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:8px;">'+c.titulo+'</div>'
+          +(c.desc ? '<div style="font-size:13px;color:var(--ink2);line-height:1.7;white-space:pre-wrap;">'+c.desc+'</div>' : '')
+        +'</div>'
+        +(editor ? '<button style="background:none;border:none;font-size:16px;color:var(--ink3);cursor:pointer;padding:0 2px;flex-shrink:0;line-height:1;margin-top:2px;" data-delidx="'+realIdx+'">✕</button>' : '')
+      +'</div>'
+    +'</div>';
+  }).join('');
+
+  el.querySelectorAll('[data-delidx]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = parseInt(this.dataset.delidx);
+      S.conteudos.splice(idx, 1);
+      persist(true);
+      renderConteudos();
+  if(document.getElementById('page-conteudo').classList.contains('active')) renderConteudoPage();
+    });
+  });
+}
+
+function updateAtencaoBtn(idx){
+  var e = S.ests[idx];
+  var btn = document.getElementById('btnAtencao');
+  var txt = document.getElementById('btnAtencaoTxt');
+  var hint = document.getElementById('atencaoHint');
+  if(!btn) return;
+  if(e.atencao){
+    btn.classList.add('ativo');
+    txt.textContent = 'Remover atenção';
+  } else {
+    btn.classList.remove('ativo');
+    txt.textContent = 'Marcar como atenção';
+  }
+  btn.disabled = !editor;
+  if(hint) hint.textContent = editor ? 'Clique para alternar o status de atenção.' : 'Entre como tutora para alterar.';
+}
 
 var TL_DATA = [
   {num:'Mês 1', name:'Acolhimento', cls:'c1'},
@@ -754,6 +1143,102 @@ function renderTimeline(){
   });
 }
 
+
+function getTrilhaKey(inicio){
+  if(!inicio) return null;
+  var s=new Date(inicio), now=new Date();
+  if(now<s) return null;
+  var y=now.getFullYear()-s.getFullYear(), m=now.getMonth()-s.getMonth();
+  if(m<0){y--;m+=12;}
+  var totalMonths = y*12+m;
+  if(totalMonths < 3) return 'iniciante';
+  if(totalMonths < 6) return 'intermediario';
+  return 'avancado';
+}
+
+function getTrilhaCor(key){
+  var cores = {iniciante:'#EC7000', intermediario:'#B45309', avancado:'#166534'};
+  return cores[key]||'#EC7000';
+}
+
+function renderPanelTrilha(idx){
+  var e = S.ests[idx];
+  var key = e.perfil && e.perfil.inicio ? getTrilhaKey(e.perfil.inicio) : null;
+  var el = document.getElementById('pTrilha');
+  if(!el) return;
+
+  if(!key){
+    el.innerHTML = '<div style="font-size:13px;color:var(--ink3);font-style:italic;padding:4px 0;">Cadastre a data de início para identificar a trilha automaticamente.</div>';
+    return;
+  }
+
+  var t = TRILHAS[key];
+  var cor = getTrilhaCor(key);
+  if(!e.trilhaChecks) e.trilhaChecks = {};
+
+  var html = '<div style="background:var(--or-f);border:1px solid rgba(236,112,0,.2);border-left:3px solid '+cor+';border-radius:8px;padding:12px 14px;margin-bottom:14px;">'
+    +'<div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:'+cor+';font-weight:600;margin-bottom:3px;">Trilha identificada</div>'
+    +'<div style="font-size:14px;font-weight:500;color:var(--ink);">'+t.titulo+'</div>'
+    +'<div style="font-size:12px;color:var(--ink2);font-style:italic;margin-top:3px;">'+t.frase+'</div>'
+    +'</div>';
+
+  t.topicos.forEach(function(tp, ti){
+    var checkKey = key+'_'+ti;
+    var checks = e.trilhaChecks[checkKey] || Array(tp.checks.length).fill(false);
+    var doneCount = checks.filter(Boolean).length;
+    var total = tp.checks.length;
+    var pct = Math.round(doneCount/total*100);
+
+    html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden;">'
+      // topic header
+      +'<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border);">'
+        +'<div style="width:22px;height:22px;border-radius:50%;background:'+cor+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">'+(ti+1)+'</div>'
+        +'<div style="flex:1;min-width:0;">'
+          +'<div style="font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+tp.tema+'</div>'
+        +'</div>'
+        +'<div style="font-size:11px;color:'+cor+';font-weight:600;flex-shrink:0;">'+doneCount+'/'+total+'</div>'
+      +'</div>'
+      // progress bar
+      +'<div style="height:3px;background:var(--bg);">'
+        +'<div style="height:100%;background:'+cor+';width:'+pct+'%;transition:width .3s;"></div>'
+      +'</div>'
+      // checklist
+      +'<div style="padding:10px 14px;display:flex;flex-direction:column;gap:8px;">';
+
+    tp.checks.forEach(function(c, ci){
+      var checked = checks[ci]||false;
+      var canEdit = editor;
+      html += '<label style="display:flex;align-items:center;gap:9px;cursor:'+(canEdit?'pointer':'default')+';-webkit-tap-highlight-color:transparent;">'
+        +'<input type="checkbox"'+(checked?' checked':'')+(canEdit?'':' disabled')
+          +' data-trilha="'+key+'" data-topico="'+ti+'" data-check="'+ci+'" data-est="'+idx+'"'
+          +' style="width:16px;height:16px;accent-color:'+cor+';flex-shrink:0;cursor:'+(canEdit?'pointer':'not-allowed')+';">'
+        +'<span style="font-size:12.5px;color:'+(checked?'var(--ink2)':'var(--ink)')+';'+(checked?'text-decoration:line-through;opacity:.6;':'')+'">'+c+'</span>'
+        +'</label>';
+    });
+
+    html += '</div></div>';
+  });
+
+  el.innerHTML = html;
+
+  // Attach checkbox listeners
+  el.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var estIdx = parseInt(this.dataset.est);
+      var trilhaKey = this.dataset.trilha;
+      var topicoIdx = parseInt(this.dataset.topico);
+      var checkIdx = parseInt(this.dataset.check);
+      var t2 = TRILHAS[trilhaKey];
+      var ck = trilhaKey+'_'+topicoIdx;
+      if(!S.ests[estIdx].trilhaChecks) S.ests[estIdx].trilhaChecks = {};
+      if(!S.ests[estIdx].trilhaChecks[ck]) S.ests[estIdx].trilhaChecks[ck] = Array(t2.topicos[topicoIdx].checks.length).fill(false);
+      S.ests[estIdx].trilhaChecks[ck][checkIdx] = this.checked;
+      persist(true);
+      renderPanelTrilha(estIdx);
+    });
+  });
+}
+
 function renderCards(){
   var cards=S.ests.map(function(e,ei){
     var ci=currMonth(e);
@@ -770,6 +1255,7 @@ function renderCards(){
         +(hasFn?'<span class="nc-chip func">#'+e.perfil.funcional+'</span>':'')
         +(t?'<span class="nc-chip">◷ '+t+'</span>':'')
         +(!hasFn&&!t?'<span class="nc-chip empty">Perfil não cadastrado</span>':'')
+        +(e.atencao?'<span class="nc-atencao"><span class="nc-atencao-dot"></span>Atenção</span>':'')
       +'</div>'
       +'<div class="nc-bottom"><div class="nc-dots">'+dots+'</div><span class="nc-count">'+done+'/6 meses</span></div>'
       +'</div>';
@@ -792,9 +1278,8 @@ function openPanel(idx){
   document.getElementById('pFunc').textContent=e.perfil&&e.perfil.funcional?e.perfil.funcional:'—';
   document.getElementById('pInicio').textContent=fmtDate(e.perfil&&e.perfil.inicio?e.perfil.inicio:'');
   document.getElementById('pTempo').textContent=(e.perfil&&e.perfil.inicio?calcTempo(e.perfil.inicio):null)||'—';
-  document.getElementById('pMeses').innerHTML=e.meses.map(function(s,i){
-    return '<div class="pmes '+mClass(s)+'"><div class="pmes-n">'+ML[i]+'</div><div class="pmes-s">'+sShort(s)+'</div></div>';
-  }).join('');
+  renderPanelTrilha(idx);
+  updateAtencaoBtn(idx);
   document.getElementById('obsTA').value=e.obs||'';
   document.getElementById('obsTA').disabled=!editor;
   document.getElementById('btnObs').disabled=!editor;
@@ -951,7 +1436,8 @@ function goPage(id){
   var pg=document.getElementById('page-'+id);
   if(pg) pg.classList.add('active');
   document.querySelectorAll('.nav-item[data-page="'+id+'"],.drawer-item[data-page="'+id+'"]').forEach(function(el){el.classList.add('active');});
-  if(id==='overview') renderTimeline();
+  if(id==='overview'){ renderTimeline(); renderConteudos(); }
+  if(id==='conteudo') renderConteudoPage();
   if(id==='estagiarios') renderCards();
   if(id==='trilhas') renderTrilha();
   if(id==='cadastro'){ cadIdx=-1; document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário'; ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';}); updateCadPreview(); setCadInputState(); renderCadList(); }
@@ -990,7 +1476,15 @@ function applyMode(){
   }
   renderCards();
   setCadInputState();
-  if(panelIdx>=0){ document.getElementById('obsTA').disabled=!editor; document.getElementById('btnObs').disabled=!editor; document.getElementById('obsHint').textContent=editor?'Salvo localmente no navegador.':'Entre como tutora para editar.'; }
+  if(panelIdx>=0){
+    document.getElementById('obsTA').disabled=!editor;
+    document.getElementById('btnObs').disabled=!editor;
+    document.getElementById('obsHint').textContent=editor?'Salvo localmente no navegador.':'Entre como tutora para editar.';
+    renderPanelTrilha(panelIdx);
+    updateAtencaoBtn(panelIdx);
+  }
+  renderConteudos();
+  if(document.getElementById('page-conteudo').classList.contains('active')) renderConteudoPage();
 }
 
 // ── EVENT LISTENERS ────────────────────────────────────────────────────────
@@ -1058,6 +1552,97 @@ document.addEventListener('DOMContentLoaded', function(){
   // Panel
   document.getElementById('overlay').addEventListener('click', closePanel);
   document.getElementById('panelClose').addEventListener('click', closePanel);
+  // Atenção button
+  document.getElementById('btnAtencao').addEventListener('click', function(){
+    if(!editor || panelIdx < 0) return;
+    S.ests[panelIdx].atencao = !S.ests[panelIdx].atencao;
+    persist(true);
+    updateAtencaoBtn(panelIdx);
+    renderCards();
+  });
+
+  // Trilha access cards → open reader page
+  document.querySelectorAll('.trilha-access-card').forEach(function(card){
+    card.addEventListener('click', function(){ openConteudoPage(this.dataset.tab); });
+    card.addEventListener('mouseenter', function(){ this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,.08)'; });
+    card.addEventListener('mouseleave', function(){ this.style.transform=''; this.style.boxShadow=''; });
+  });
+
+  // Back button
+  document.getElementById('btnBackConteudo').addEventListener('click', function(){
+    goPage('overview');
+  });
+
+  // Reader page add form
+  document.getElementById('btnShowAddConteudoR').addEventListener('click', function(){
+    document.getElementById('addConteudoWrapReader').style.display='block';
+    this.style.display='none';
+  });
+  document.getElementById('btnCancelConteudoR').addEventListener('click', function(){
+    editandoConteudoIdx = -1;
+    editorImages['cDescR'] = [];
+    renderImgPreview('cDescR');
+    var saveBtn = document.getElementById('btnSaveConteudoR');
+    if(saveBtn) saveBtn.textContent = 'Salvar';
+    document.getElementById('addConteudoWrapReader').style.display='none';
+    document.getElementById('btnShowAddConteudoR').style.display='inline-flex';
+    ['cTituloR','cDescR'].forEach(function(id){ document.getElementById(id).value=''; });
+  });
+  document.getElementById('btnSaveConteudoR').addEventListener('click', function(){
+    var titulo = document.getElementById('cTituloR').value.trim();
+    var desc   = document.getElementById('cDescR').value.trim();
+    if(!titulo){ document.getElementById('cTituloR').focus(); return; }
+    if(!desc)  { document.getElementById('cDescR').focus(); return; }
+    if(!S.conteudos) S.conteudos=[];
+    if(editandoConteudoIdx >= 0){
+      // Update existing
+      S.conteudos[editandoConteudoIdx].titulo = titulo;
+      S.conteudos[editandoConteudoIdx].desc   = desc;
+      S.conteudos[editandoConteudoIdx].imgs   = (editorImages['cDescR']||[]).slice();
+      editandoConteudoIdx = -1;
+    } else {
+      // New content
+      S.conteudos.push({titulo:titulo, trilha:activeConteudoPage, desc:desc, imgs:editorImages['cDescR']||[]});
+    }
+    editorImages['cDescR']=[];
+    renderImgPreview('cDescR');
+    persist(true);
+    renderConteudoPage();
+    var saveBtn = document.getElementById('btnSaveConteudoR');
+    if(saveBtn) saveBtn.textContent = 'Salvar';
+    document.getElementById('addConteudoWrapReader').style.display='none';
+    document.getElementById('btnShowAddConteudoR').style.display='inline-flex';
+    ['cTituloR','cDescR'].forEach(function(id){ document.getElementById(id).value=''; });
+  });
+
+  // Conteúdos
+  document.getElementById('btnShowAddConteudo').addEventListener('click', function(){
+    document.getElementById('addConteudoWrap').style.display='block';
+    this.style.display='none';
+  });
+  document.getElementById('btnCancelConteudo').addEventListener('click', function(){
+    document.getElementById('addConteudoWrap').style.display='none';
+    document.getElementById('btnShowAddConteudo').style.display='inline-flex';
+    ['cTitulo','cDesc'].forEach(function(id){ document.getElementById(id).value=''; });
+  });
+  document.getElementById('btnSaveConteudo').addEventListener('click', function(){
+    var titulo = document.getElementById('cTitulo').value.trim();
+    var desc   = document.getElementById('cDesc').value.trim();
+    if(!titulo){ document.getElementById('cTitulo').focus(); return; }
+    if(!desc)  { document.getElementById('cDesc').focus(); return; }
+    if(!S.conteudos) S.conteudos=[];
+    S.conteudos.push({titulo:titulo, trilha:document.getElementById('cTrilha').value, desc:desc, imgs:editorImages['cDesc']||[]});
+    editorImages['cDesc']=[];
+    renderImgPreview('cDesc');
+    activeConteudoTab = document.getElementById('cTrilha').value;
+    persist(true);
+    renderConteudos();
+  if(document.getElementById('page-conteudo').classList.contains('active')) renderConteudoPage();
+    document.getElementById('addConteudoWrap').style.display='none';
+    document.getElementById('btnShowAddConteudo').style.display='inline-flex';
+    ['cTitulo','cDesc'].forEach(function(id){ document.getElementById(id).value=''; });
+  });
+
   document.getElementById('btnObs').addEventListener('click', function(){
     if(!editor||panelIdx<0) return;
     S.ests[panelIdx].obs=document.getElementById('obsTA').value;
@@ -1083,10 +1668,120 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('renameIn').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('btnConfirmRename').click(); if(e.key==='Escape') document.getElementById('renameOv').classList.remove('open'); });
 
   // Init
-  updateMetrics(); renderCiclos(); renderCards(); renderTrilha(); renderCadList(); renderTimeline(); updateProgress();
+  updateMetrics(); renderCiclos(); renderCards(); renderTrilha(); renderCadList(); renderTimeline(); renderConteudos(); updateProgress();
+  setupImgInput('cDesc'); setupImgInput('cDescR');
 });
 
+
 })();
+
+/* ─── RICH EDITOR JS ─── */
+var editorImages = {cDesc:[], cDescR:[]};
+
+function fmtText(id, type){
+  var ta = document.getElementById(id);
+  if(!ta) return;
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s,e);
+  var before = ta.value.slice(0,s), after = ta.value.slice(e);
+  var ins = '';
+  if(type==='bold')      ins = '**'+(sel||'negrito')+'**';
+  if(type==='italic')    ins = '_'+(sel||'itálico')+'_';
+  if(type==='underline') ins = '__'+(sel||'sublinhado')+'__';
+  if(type==='heading'){
+    var ls = before.lastIndexOf('\n')+1;
+    var line = ta.value.slice(ls,e);
+    ta.value = ta.value.slice(0,ls)+'## '+line+after;
+    ta.focus(); ta.setSelectionRange(ls+3,ls+3+line.length); return;
+  }
+  if(type==='ul'){
+    var lines = (sel||'Item').split('\n');
+    ins = lines.map(function(l){ return '• '+l; }).join('\n');
+    if(!sel) ins += '\n';
+  }
+  if(type==='ol'){
+    var lines = (sel||'Item').split('\n');
+    ins = lines.map(function(l,i){ return (i+1)+'. '+l; }).join('\n');
+    if(!sel) ins += '\n';
+  }
+  ta.value = before+ins+after;
+  ta.focus(); ta.setSelectionRange(before.length, before.length+ins.length);
+}
+
+function toggleEmoji(id){
+  var p = document.getElementById('emoji_'+id);
+  if(p) p.classList.toggle('open');
+}
+
+function insertEmoji(id, emoji){
+  var ta = document.getElementById(id);
+  if(!ta) return;
+  var pos = ta.selectionStart;
+  ta.value = ta.value.slice(0,pos)+emoji+ta.value.slice(pos);
+  ta.focus(); ta.setSelectionRange(pos+emoji.length, pos+emoji.length);
+  var p = document.getElementById('emoji_'+id);
+  if(p) p.classList.remove('open');
+}
+
+function setupImgInput(id){
+  var input = document.getElementById('imgInput_'+id);
+  if(!input) return;
+  input.addEventListener('change', function(){
+    if(!editorImages[id]) editorImages[id]=[];
+    Array.from(this.files).forEach(function(file){
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        editorImages[id].push(ev.target.result);
+        renderImgPreview(id);
+      };
+      reader.readAsDataURL(file);
+    });
+    this.value='';
+  });
+}
+
+function renderImgPreview(id){
+  var wrap = document.getElementById('imgPreview_'+id);
+  if(!wrap) return;
+  var imgs = editorImages[id]||[];
+  if(!imgs.length){ wrap.style.display='none'; wrap.innerHTML=''; return; }
+  wrap.style.display='flex';
+  wrap.innerHTML = imgs.map(function(src,i){
+    return '<div class="rich-img-thumb-wrap"><img class="rich-img-thumb" src="'+src+'"><button class="rich-img-del" data-imgid="'+id+'" data-idx="'+i+'">✕</button></div>';
+  }).join('');
+  wrap.querySelectorAll('.rich-img-del').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      editorImages[this.dataset.imgid].splice(parseInt(this.dataset.idx),1);
+      renderImgPreview(this.dataset.imgid);
+    });
+  });
+}
+
+function renderContent(text, images){
+  if(!text && (!images||!images.length)) return '';
+  var h = (text||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/[*][*](.+?)[*][*]/g,'<strong>$1</strong>')
+    .replace(/_(.+?)_/g,'<em>$1</em>')
+    .replace(/__(.+?)__/g,'<u>$1</u>')
+    .replace(/^## (.+)$/gm,'<div style="font-size:15px;font-weight:600;color:var(--ink);margin:12px 0 4px;">$1</div>')
+    .replace(/\n/g,'<br>');
+  if(images && images.length){
+    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;">'
+      +images.map(function(src){ return '<img src="'+src+'" style="max-width:100%;max-height:260px;border-radius:8px;border:1px solid var(--border);object-fit:contain;">'; }).join('')
+    +'</div>';
+  }
+  return h;
+}
+
+document.addEventListener('click', function(ev){
+  if(!ev.target.closest('.rtb-emoji-wrap')){
+    document.querySelectorAll('.rtb-emoji-picker').forEach(function(p){ p.classList.remove('open'); });
+  }
+});
+
+
+
 </script>
 </body>
 </html>
