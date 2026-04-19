@@ -63,9 +63,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .drawer-overlay.open{opacity:1;}
 .drawer{position:fixed;top:0;left:0;width:280px;height:100vh;background:var(--surface);z-index:201;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:4px 0 32px rgba(0,0,0,.15);}
 .drawer.open{transform:translateX(0);}
-.drawer-header{background:var(--or);padding:24px 20px 20px;flex-shrink:0;}
-.drawer-logo{height:32px;display:block;filter:brightness(0) invert(1);margin-bottom:10px;}
-.drawer-sub{font-size:11px;color:rgba(255,255,255,.75);letter-spacing:.03em;}
+.drawer-header{background:var(--surface);padding:24px 20px 20px;flex-shrink:0;border-bottom:1px solid var(--border);}
+.drawer-logo{height:36px;display:block;margin-bottom:10px;}
+.drawer-sub{font-size:11px;color:var(--ink3);letter-spacing:.03em;}
 .drawer-nav{flex:1;overflow-y:auto;padding:16px 12px;}
 .drawer-section-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:500;padding:0 8px;margin:12px 0 4px;}
 .drawer-section-lbl:first-child{margin-top:0;}
@@ -218,6 +218,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   .notion-grid{grid-template-columns:1fr;}
   .tname{font-size:9px;}
   .tnum{font-size:8px;}
+  .tline{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .tcell{min-width:80px;flex-shrink:0;scroll-snap-align:start;}
   .ph h1{font-size:22px;}
   .cad-chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
   .cad-chip{white-space:nowrap;flex-shrink:0;}
@@ -301,6 +303,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .acc-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 12px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .12s;}
 .acc-btn:hover{background:var(--or-l);color:var(--or-d);border-color:var(--or-m);}
 .acc-btn.del:hover{background:#FEE2E2;color:#DC2626;border-color:#FECACA;}
+
+
+/* ── LOCK SCREEN ── */
+.lock-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:32px 24px;}
+.lock-icon{font-size:48px;margin-bottom:20px;opacity:.7;}
+.lock-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);margin-bottom:8px;}
+.lock-sub{font-size:14px;color:var(--ink3);margin-bottom:28px;line-height:1.6;max-width:280px;}
+.btn-lock-login{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--or);color:#fff;border:none;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;}
+.btn-lock-login:hover{background:var(--or-d);}
 
 /* ── TRILHAS ── */
 .trilha-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
@@ -404,6 +415,8 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
   .notion-grid{grid-template-columns:1fr;}
   .tname{font-size:9px;}
   .tnum{font-size:8px;}
+  .tline{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .tcell{min-width:80px;flex-shrink:0;scroll-snap-align:start;}
   .ph h1{font-size:22px;}
   .cad-chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
   .cad-chip{white-space:nowrap;flex-shrink:0;}
@@ -720,8 +733,21 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 
   <!-- ACOMPANHAMENTO -->
   <section id="page-estagiarios" class="page">
-    <div class="ph"><h1>Acompanhamento <em>individual</em></h1><p>Toque no card para ver o perfil e adicionar observações.</p></div>
-    <div id="notionGrid"></div>
+
+    <!-- Lock screen (shown when not tutora) -->
+    <div class="lock-screen" id="estagLock">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">Acesso restrito</div>
+      <div class="lock-sub">Esta área é exclusiva para a tutora.<br>Faça login para visualizar o acompanhamento dos estagiários.</div>
+      <button class="btn-lock-login" id="btnLockLogin">Entrar como tutora</button>
+    </div>
+
+    <!-- Content (shown when tutora) -->
+    <div id="estagContent" style="display:none;">
+      <div class="ph"><h1>Acompanhamento <em>individual</em></h1><p>Toque no card para ver o perfil e adicionar observações.</p></div>
+      <div id="notionGrid"></div>
+    </div>
+
   </section>
 
   <!-- CADASTRO -->
@@ -1621,7 +1647,18 @@ function goPage(id){
   if(id==='overview'){ renderTimeline(); renderConteudos(); }
   if(id==='conteudos'){ /* cards are static */ }
   if(id==='conteudo') renderConteudoPage();
-  if(id==='estagiarios') renderCards();
+  if(id==='estagiarios'){
+    var lock = document.getElementById('estagLock');
+    var content = document.getElementById('estagContent');
+    if(editor){
+      if(lock) lock.style.display='none';
+      if(content) content.style.display='block';
+      renderCards();
+    } else {
+      if(lock) lock.style.display='flex';
+      if(content) content.style.display='none';
+    }
+  }
   if(id==='trilhas') renderTrilha();
   if(id==='cadastro'){ cadIdx=-1; document.getElementById('cadAddBtn').textContent='+ Adicionar estagiário'; ['cadNome','cadIdade','cadFunc','cadInicio'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';}); updateCadPreview(); setCadInputState(); renderCadList(); }
 }
@@ -1657,7 +1694,21 @@ function applyMode(){
     dbtn.textContent='Entrar como tutora'; dbtn.classList.remove('on');
     banner.classList.remove('gone');
   }
-  renderCards();
+  // If on estagiarios page, re-evaluate lock
+  if(document.getElementById('page-estagiarios').classList.contains('active')){
+    var lock2 = document.getElementById('estagLock');
+    var content2 = document.getElementById('estagContent');
+    if(editor){
+      if(lock2) lock2.style.display='none';
+      if(content2) content2.style.display='block';
+      renderCards();
+    } else {
+      if(lock2) lock2.style.display='flex';
+      if(content2) content2.style.display='none';
+    }
+  } else {
+    renderCards();
+  }
   setCadInputState();
   if(panelIdx>=0){
     document.getElementById('obsTA').disabled=!editor;
@@ -1731,6 +1782,9 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('btnLogin').addEventListener('click', doLogin);
   document.getElementById('btnCancelLogin').addEventListener('click', cancelLogin);
   document.getElementById('loginPwd').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); if(e.key==='Escape') cancelLogin(); });
+
+  // Lock screen login button
+  document.getElementById('btnLockLogin').addEventListener('click', openLogin);
 
   // Panel
   document.getElementById('overlay').addEventListener('click', closePanel);
