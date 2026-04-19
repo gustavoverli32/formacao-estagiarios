@@ -285,6 +285,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .rich-img-thumb-wrap{position:relative;}
 .rich-img-del{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
 
+
+/* ── ACCORDION CONTEUDO ── */
+.acc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);overflow:hidden;transition:border-color .15s;}
+.acc-card:hover{border-color:var(--or-m);}
+.acc-header{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+.acc-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.acc-title{font-size:14px;font-weight:500;color:var(--ink);flex:1;line-height:1.3;}
+.acc-arrow{font-size:16px;color:var(--ink3);transition:transform .22s;flex-shrink:0;}
+.acc-card.open .acc-arrow{transform:rotate(90deg);}
+.acc-body{display:none;padding:0 18px 18px 18px;border-top:1px solid var(--border);}
+.acc-card.open .acc-body{display:block;}
+.acc-body-inner{padding-top:16px;font-size:13.5px;color:var(--ink2);line-height:1.85;}
+.acc-actions{display:flex;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.acc-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 12px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .12s;}
+.acc-btn:hover{background:var(--or-l);color:var(--or-d);border-color:var(--or-m);}
+.acc-btn.del:hover{background:#FEE2E2;color:#DC2626;border-color:#FECACA;}
+
 /* ── TRILHAS ── */
 .trilha-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
 .trilha-tab{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:20px;border:1.5px solid var(--border2);background:var(--surface);color:var(--ink2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
@@ -418,6 +435,7 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
   <div class="nav-section">
     <div class="nav-lbl">Programa</div>
     <div class="nav-item" data-page="trilhas">◑ Trilhas</div>
+    <div class="nav-item" data-page="conteudos">◧ Conteúdos</div>
   </div>
   <div class="sb-progress">
     <div class="sb-progress-row"><span>PROGRESSO</span><span id="pctLbl">0%</span></div>
@@ -462,6 +480,10 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
       <div class="drawer-item" data-page="trilhas">
         <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/><circle cx="19" cy="18" r="2.5"/></svg>
         Trilhas
+      </div>
+      <div class="drawer-item" data-page="conteudos">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+        Conteúdos
       </div>
     </div>
     <div class="drawer-footer">
@@ -605,6 +627,42 @@ textarea.obs:disabled{opacity:.5;cursor:not-allowed;}
 
   </section>
 
+
+  <!-- CONTEÚDOS PAGE -->
+  <section id="page-conteudos" class="page">
+    <div class="ph">
+      <h1>Conteúdos das <em>trilhas</em></h1>
+      <p>Selecione a trilha para acessar os conteúdos disponíveis.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <div class="trilha-access-card" data-tab="iniciante" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r);border:1px solid rgba(236,112,0,.25);background:var(--or-l);cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#EC7000;margin-bottom:3px;">Trilha Iniciante</div>
+          <div style="font-size:13px;color:var(--ink2);">1 a 3 meses · Base e segurança · Integração e conhecimento do banco</div>
+        </div>
+        <div style="font-size:22px;color:#EC7000;font-weight:300;">›</div>
+      </div>
+
+      <div class="trilha-access-card" data-tab="intermediario" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r);border:1px solid rgba(180,83,9,.25);background:#FEF3C7;cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#B45309;margin-bottom:3px;">Trilha Intermediária</div>
+          <div style="font-size:13px;color:var(--ink2);">3 a 6 meses · Desenvolvimento · Participação ativa e postura profissional</div>
+        </div>
+        <div style="font-size:22px;color:#B45309;font-weight:300;">›</div>
+      </div>
+
+      <div class="trilha-access-card" data-tab="avancado" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r);border:1px solid rgba(22,101,52,.25);background:#DCFCE7;cursor:pointer;transition:box-shadow .15s,transform .15s;-webkit-tap-highlight-color:transparent;">
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#166534;margin-bottom:3px;">Trilha Avançada</div>
+          <div style="font-size:13px;color:var(--ink2);">Acima de 6 meses · Protagonismo · Mini projetos, autonomia e visão de futuro</div>
+        </div>
+        <div style="font-size:22px;color:#166534;font-weight:300;">›</div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- CONTEUDO READER -->
   <section id="page-conteudo" class="page">
@@ -944,9 +1002,12 @@ function renderConteudoPage(){
   var info = TRILHA_INFO[tk];
   var el = document.getElementById('conteudoPageList');
   if(!el) return;
+
   var showAddBtn = document.getElementById('btnShowAddConteudoR');
   if(showAddBtn) showAddBtn.style.display = editor ? 'inline-flex' : 'none';
+
   var items = (S.conteudos||[]).filter(function(c){ return c.trilha===tk; });
+
   if(!items.length){
     el.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:40px;text-align:center;">'
       +'<div style="font-size:36px;margin-bottom:14px;">📭</div>'
@@ -955,50 +1016,75 @@ function renderConteudoPage(){
     +'</div>';
     return;
   }
+
   el.innerHTML = items.map(function(c,i){
     var realIdx = S.conteudos.indexOf(c);
-    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:14px;box-shadow:var(--sh);">'
-      +'<div style="display:flex;align-items:flex-start;gap:14px;">'
-        +'<div style="width:30px;height:30px;border-radius:50%;background:'+info.bg+';border:2px solid '+info.cor+';color:'+info.cor+';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;">'+(i+1)+'</div>'
-        +'<div style="flex:1;">'
-          +'<div style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:10px;line-height:1.3;">'+c.titulo+'</div>'
-          +(c.desc||c.imgs?'<div style="font-size:13.5px;color:var(--ink2);line-height:1.85;">'+renderContent(c.desc,c.imgs)+'</div>':'')
+    var editorBtns = editor
+      ? '<div class="acc-actions">'
+          +'<button class="acc-btn" data-realedit="'+realIdx+'">✏ Editar</button>'
+          +'<button class="acc-btn del" data-realdel="'+realIdx+'">✕ Remover</button>'
         +'</div>'
-        +(editor?'<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;"><button style="background:none;border:1px solid var(--border);border-radius:5px;font-size:12px;color:var(--ink2);cursor:pointer;padding:3px 8px;white-space:nowrap;" data-realedit="'+realIdx+'">✏ Editar</button><button style="background:none;border:1px solid var(--border);border-radius:5px;font-size:12px;color:var(--ink3);cursor:pointer;padding:3px 8px;" data-realdel="'+realIdx+'">✕</button></div>':'')
+      : '';
+    return '<div class="acc-card" data-accidx="'+i+'">'
+      +'<div class="acc-header">'
+        +'<div class="acc-num" style="background:'+info.bg+';border:2px solid '+info.cor+';color:'+info.cor+';">'+(i+1)+'</div>'
+        +'<div class="acc-title">'+c.titulo+'</div>'
+        +'<span class="acc-arrow">›</span>'
+      +'</div>'
+      +'<div class="acc-body">'
+        +'<div class="acc-body-inner">'
+          +(c.desc||c.imgs ? renderContent(c.desc,c.imgs) : '')
+        +'</div>'
+        + editorBtns
       +'</div>'
     +'</div>';
   }).join('');
+
+  // Toggle accordion on header click
+  el.querySelectorAll('.acc-header').forEach(function(hd){
+    hd.addEventListener('click', function(){
+      var card = this.closest('.acc-card');
+      var wasOpen = card.classList.contains('open');
+      // close all
+      el.querySelectorAll('.acc-card').forEach(function(c){ c.classList.remove('open'); });
+      // open clicked if it wasn't open
+      if(!wasOpen) card.classList.add('open');
+    });
+  });
+
+  // Delete
   el.querySelectorAll('[data-realdel]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var delId = S.conteudos[parseInt(this.dataset.realdel)].id;
-      S.conteudos.splice(parseInt(this.dataset.realdel),1);
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var idx = parseInt(this.dataset.realdel);
+      var delId = S.conteudos[idx].id;
+      S.conteudos.splice(idx, 1);
       if(delId) deleteConteudo(delId);
       persist(true); renderConteudoPage();
     });
   });
+
+  // Edit
   el.querySelectorAll('[data-realedit]').forEach(function(btn){
-    btn.addEventListener('click', function(){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
       var idx = parseInt(this.dataset.realedit);
       var c = S.conteudos[idx];
       editandoConteudoIdx = idx;
-      // Fill form fields
       document.getElementById('cTituloR').value = c.titulo || '';
       document.getElementById('cDescR').value   = c.desc   || '';
-      // Load images
       editorImages['cDescR'] = (c.imgs || []).slice();
       renderImgPreview('cDescR');
-      // Show form
       var wrap = document.getElementById('addConteudoWrapReader');
       wrap.style.display = 'block';
-      // Change button label
       var saveBtn = document.getElementById('btnSaveConteudoR');
       if(saveBtn) saveBtn.textContent = 'Salvar alterações';
       document.getElementById('btnShowAddConteudoR').style.display = 'none';
-      // Scroll to form
       wrap.scrollIntoView({behavior:'smooth', block:'start'});
     });
   });
 }
+
 
 var editor=false, panelIdx=-1, cadIdx=-1, renameIdx=-1, activeTrilha='iniciante', activeConteudoTab='iniciante', editandoConteudoIdx=-1;
 
@@ -1512,15 +1598,11 @@ function renderTrilha(){
         +'<div class="t-num" style="background:'+cor+'">'+(i+1)+'</div>'
         +'<div><div class="t-tema">'+tp.tema+'</div><div class="t-obj">'+tp.obj+'</div></div>'
       +'</div>'
-      +'<div class="t-body">'
-        +'<div class="t-col">'
+      +'<div class="t-body" style="grid-template-columns:1fr;">'
+        +'<div class="t-col" style="border-right:none;">'
           +'<div class="t-col-ttl">Ações e atividades</div>'
           +tp.acoes.map(function(a){return '<div class="t-acao"><span class="t-bullet" style="background:'+cor+'"></span>'+a+'</div>';}).join('')
-          +'<div style="margin-top:12px"><div class="t-col-ttl">Papel da tutora</div><div class="t-tutora">'+tp.tutora+'</div></div>'
-        +'</div>'
-        +'<div class="t-col">'
-          +'<div class="t-col-ttl">Checklist de evolução</div>'
-          +tp.checks.map(function(c){return '<div class="t-check"><div class="t-check-box" style="border-color:'+cor+'">☐</div>'+c+'</div>';}).join('')
+          +'<div style="margin-top:14px"><div class="t-col-ttl">Papel da tutora</div><div class="t-tutora">'+tp.tutora+'</div></div>'
         +'</div>'
       +'</div>'
     +'</div>';
@@ -1537,6 +1619,7 @@ function goPage(id){
   if(pg) pg.classList.add('active');
   document.querySelectorAll('.nav-item[data-page="'+id+'"],.drawer-item[data-page="'+id+'"]').forEach(function(el){el.classList.add('active');});
   if(id==='overview'){ renderTimeline(); renderConteudos(); }
+  if(id==='conteudos'){ /* cards are static */ }
   if(id==='conteudo') renderConteudoPage();
   if(id==='estagiarios') renderCards();
   if(id==='trilhas') renderTrilha();
