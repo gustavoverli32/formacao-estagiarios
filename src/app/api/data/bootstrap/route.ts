@@ -4,7 +4,11 @@ import {
   sanitizeProjectTexts,
   type StudentReadRow,
 } from "@/domain/read-model";
-import { normalizeProductionAuditHistory } from "@/domain/production-audit";
+import {
+  enrichProductionAuditHistoryRegionals,
+  filterProductionAuditHistoryByRegional,
+  normalizeProductionAuditHistory,
+} from "@/domain/production-audit";
 import { createSupabaseAdminClient } from "@/lib/supabase-server";
 import {
   getProductionSession,
@@ -182,6 +186,12 @@ export async function GET(request: Request) {
 
     const activeRows = rows.filter((row) => !row.arquivado_em);
     const archivedRows = rows.filter((row) => Boolean(row.arquivado_em));
+    const productionAuditHistory = enrichProductionAuditHistoryRegionals(
+      normalizeProductionAuditHistory(
+        settings.get("historico_pendencias_producao"),
+      ),
+      rows,
+    );
     let students: Array<ReturnType<typeof privateStudent>> = activeRows.map(privateStudent);
     let archivedStudents = archivedRows.map(privateStudent);
     let readableStudentIds = new Set(rows.map((row) => row.id));
@@ -223,9 +233,13 @@ export async function GET(request: Request) {
         monthlyChecklist: settings.get("checklist_mensal") ?? { enabled: true },
         productionAuditHistory:
           canAccessSettings
-            ? normalizeProductionAuditHistory(
-                settings.get("historico_pendencias_producao"),
-              )
+            ? session.role === "gestor" &&
+              currentManager?.tipo_gestor !== "lider_regional"
+              ? filterProductionAuditHistoryByRegional(
+                  productionAuditHistory,
+                  currentManager?.regional_id,
+                )
+              : productionAuditHistory
             : [],
         managers,
         production: productionData,

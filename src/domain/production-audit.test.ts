@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   buildProductionAuditEntry,
+  enrichProductionAuditHistoryRegionals,
+  filterProductionAuditHistoryByRegional,
   getMostRecentlyClosedDeadline,
   mergeProductionAuditEntry,
   normalizeProductionAuditHistory,
@@ -51,4 +53,33 @@ test("keeps one immutable audit per deadline and sanitizes stored history", () =
   const merged = mergeProductionAuditEntry([oldEntry], newEntry);
   assert.deepEqual(merged.map((entry) => entry.deadline), ["2026-08-14", "2026-08-07"]);
   assert.deepEqual(normalizeProductionAuditHistory({ entries: merged }), merged);
+});
+
+test("keeps the regional snapshot and enriches legacy pending entries", () => {
+  const entry = buildProductionAuditEntry(
+    [
+      { id: "1", nome: "Ana", regional_id: "regional-a", perfil: {} },
+      { id: "2", nome: "Bia", regional_id: "regional-b", perfil: {} },
+    ],
+    "2026-08-14",
+  );
+  assert.equal(entry.pending[0].regionalId, "regional-a");
+
+  const enriched = enrichProductionAuditHistoryRegionals(
+    [
+      {
+        deadline: "2026-08-07",
+        capturedAt: "2026-08-08T03:00:00.000Z",
+        pending: [{ id: "2", nome: "Bia", responsibleManagers: [] }],
+      },
+    ],
+    [{ id: "2", regional_id: "regional-b" }],
+  );
+  assert.equal(enriched[0].pending[0].regionalId, "regional-b");
+  assert.deepEqual(
+    filterProductionAuditHistoryByRegional([entry, ...enriched], "regional-b").map(
+      (audit) => audit.deadline,
+    ),
+    ["2026-08-14", "2026-08-07"],
+  );
 });

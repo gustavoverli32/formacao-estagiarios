@@ -972,11 +972,21 @@ function renderMonthlyChecklistReminder(){
 function renderProductionAuditHistory(){
   var el = document.getElementById('cfgProductionAuditHistory');
   if(!el) return;
-  var history = (S.productionAuditHistory || []).filter(function(entry){
+  renderProductionAuditRegionalFilter();
+  var selectedRegionalId = getProductionAuditRegionalId();
+  var history = (S.productionAuditHistory || []).map(function(entry){
+    var pending = Array.isArray(entry && entry.pending) ? entry.pending : [];
+    if(selectedRegionalId && selectedRegionalId !== 'all'){
+      pending = pending.filter(function(student){
+        return String(student && student.regionalId || '') === String(selectedRegionalId);
+      });
+    }
+    return Object.assign({}, entry, {pending:pending});
+  }).filter(function(entry){
     return entry && Array.isArray(entry.pending) && entry.pending.length > 0;
   });
   if(!history.length){
-    el.innerHTML = '<div class="production-audit-empty">✓ Nenhuma pendência registrada nas semanas encerradas.</div>';
+    el.innerHTML = '<div class="production-audit-empty">✓ Nenhuma pendência registrada nas semanas encerradas para esta regional.</div>';
     return;
   }
   el.innerHTML = history.map(function(entry){
@@ -999,6 +1009,54 @@ function renderProductionAuditHistory(){
   el.querySelectorAll('[data-audit-student-id]').forEach(function(button){
     button.addEventListener('click', function(){ openPanelById(this.dataset.auditStudentId); });
   });
+}
+
+function canFilterProductionAuditByRegional(){
+  return !!editor || isGerenteRegional();
+}
+
+function getProductionAuditRegionalId(){
+  if(!canFilterProductionAuditByRegional()) return getRegionalDoGestorLogado();
+  var select = document.getElementById('cfgProductionAuditRegionalSelect');
+  if(select && select.value) return select.value;
+  return S.selectedRegionalId || 'all';
+}
+
+function renderProductionAuditRegionalFilter(){
+  var container = document.getElementById('cfgProductionAuditRegionalFilter');
+  if(!container) return;
+  var regionais = S.regionais || [];
+  var regionalId = getProductionAuditRegionalId();
+  var regional = regionais.find(function(item){ return String(item.id) === String(regionalId); });
+
+  if(!canFilterProductionAuditByRegional()){
+    container.innerHTML = '<span class="production-audit-regional-context">Regional: '+escapeHtml(regional ? regional.nome : 'não definida')+'</span>';
+    return;
+  }
+
+  var previous = container.querySelector('#cfgProductionAuditRegionalSelect');
+  var currentValue = previous && previous.value ? previous.value : regionalId;
+  var select = document.createElement('select');
+  select.id = 'cfgProductionAuditRegionalSelect';
+  select.className = 'production-audit-regional-filter';
+  select.setAttribute('aria-label', 'Filtrar histórico de pendências por regional');
+  if(editor){
+    var allOption = document.createElement('option');
+    allOption.value = 'all';
+    allOption.textContent = 'Todas as regionais';
+    select.appendChild(allOption);
+  }
+  regionais.forEach(function(item){
+    var option = document.createElement('option');
+    option.value = String(item.id);
+    option.textContent = item.nome;
+    select.appendChild(option);
+  });
+  var hasCurrent = Array.from(select.options).some(function(option){ return option.value === String(currentValue); });
+  select.value = hasCurrent ? String(currentValue) : (editor ? 'all' : (regionais[0] && String(regionais[0].id)) || '');
+  select.onchange = function(){ renderProductionAuditHistory(); };
+  container.innerHTML = '';
+  container.appendChild(select);
 }
 
 function renderOverviewKpis(){

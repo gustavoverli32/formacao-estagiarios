@@ -14,6 +14,8 @@ export type ProductionAuditStudent = {
   id: string;
   nome: string;
   funcional?: string | null;
+  /** Regional registrada no momento da auditoria. */
+  regionalId?: string | null;
   responsibleManagers?: ProductionAuditManager[];
 };
 
@@ -57,6 +59,7 @@ export function buildProductionAuditEntry(
     nome: string;
     perfil?: unknown;
     gestor_funcional?: string | null;
+    regional_id?: string | null;
   }>,
   deadline: string,
   capturedAt = new Date().toISOString(),
@@ -98,6 +101,10 @@ export function buildProductionAuditEntry(
         nome: String(student.nome || "Estagiário"),
         funcional:
           typeof profile.funcional === "string" ? profile.funcional : null,
+        regionalId:
+          typeof student.regional_id === "string" && student.regional_id
+            ? student.regional_id
+            : null,
         responsibleManagers,
       };
     })
@@ -136,7 +143,7 @@ export function normalizeProductionAuditHistory(value: unknown) {
             });
           }
         }
-        pending.push({
+        const normalizedStudent: ProductionAuditStudent = {
           id: student.id,
           nome: student.nome.slice(0, 120),
           funcional:
@@ -144,7 +151,11 @@ export function normalizeProductionAuditHistory(value: unknown) {
               ? student.funcional.slice(0, 9)
               : null,
           responsibleManagers,
-        });
+        };
+        if (typeof student.regionalId === "string" && student.regionalId) {
+          normalizedStudent.regionalId = student.regionalId.slice(0, 128);
+        }
+        pending.push(normalizedStudent);
       }
     }
     entries.push({ deadline: entry.deadline, capturedAt: entry.capturedAt, pending });
@@ -152,6 +163,49 @@ export function normalizeProductionAuditHistory(value: unknown) {
   return entries
     .sort((left, right) => right.deadline.localeCompare(left.deadline))
     .slice(0, MAX_AUDIT_WEEKS);
+}
+
+/**
+ * Os históricos anteriores à regionalização não tinham a regional no snapshot.
+ * Complementamos somente os itens sem regional a partir do cadastro atual, sem
+ * sobrescrever a regional que já foi registrada na semana auditada.
+ */
+export function enrichProductionAuditHistoryRegionals(
+  history: ProductionAuditEntry[],
+  students: Array<{ id: string; regional_id?: string | null }>,
+) {
+  const regionalByStudentId = new Map(
+    students.map((student) => [
+      String(student.id),
+      typeof student.regional_id === "string" && student.regional_id
+        ? student.regional_id
+        : null,
+    ]),
+  );
+
+  return history.map((entry) => ({
+    ...entry,
+    pending: entry.pending.map((student) => ({
+      ...student,
+      regionalId:
+        student.regionalId ?? regionalByStudentId.get(String(student.id)) ?? null,
+    })),
+  }));
+}
+
+export function filterProductionAuditHistoryByRegional(
+  history: ProductionAuditEntry[],
+  regionalId?: string | null,
+) {
+  if (!regionalId) return history;
+  return history
+    .map((entry) => ({
+      ...entry,
+      pending: entry.pending.filter(
+        (student) => String(student.regionalId ?? "") === String(regionalId),
+      ),
+    }))
+    .filter((entry) => entry.pending.length > 0);
 }
 
 export function mergeProductionAuditEntry(

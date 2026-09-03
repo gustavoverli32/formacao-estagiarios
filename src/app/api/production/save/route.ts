@@ -131,7 +131,10 @@ export async function POST(request: Request) {
       snapshot,
       profile,
       confirmed,
-      productionAuditHistory,
+      // Gestores carregam o histórico já filtrado pela rota de bootstrap.
+      // Não devolvemos o snapshot global após salvar produção para não expor
+      // pendências de outras regionais no payload da requisição.
+      ...(session.role === "tutora" ? { productionAuditHistory } : {}),
     });
   } catch (error) {
     return productionErrorResponse(error);

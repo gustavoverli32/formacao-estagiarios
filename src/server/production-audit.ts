@@ -31,7 +31,7 @@ export async function ensureLatestProductionAudit(
 
   const { data: students, error: studentsError } = await supabase
     .from("estagiarios")
-    .select("id,nome,perfil,gestor_funcional")
+    .select("id,nome,perfil,gestor_funcional,regional_id")
     .order("nome");
   if (studentsError) throw studentsError;
 

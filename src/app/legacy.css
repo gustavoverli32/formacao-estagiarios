@@ -1012,6 +1012,33 @@ body.ai-chat-is-open #aiFloatBtn {
   color: var(--ink3);
   font-size: 11px;
 }
+.production-audit-history-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.production-audit-regional-filter {
+  min-width: 190px;
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink2);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.production-audit-regional-context {
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink2);
+  font-size: 11px;
+  font-weight: 600;
+}
 .production-audit-empty {
   margin-top: 10px;
   padding: 10px 12px;
@@ -1195,6 +1222,8 @@ body.ai-chat-is-open #aiFloatBtn {
 }
 
 @media (max-width: 600px) {
+  .production-audit-history-head { align-items: stretch; flex-direction: column; }
+  .production-audit-regional-filter { width: 100%; }
   .production-audit-week-summary { align-items: flex-start; flex-direction: column; }
   .monthly-checklist-reminder { padding: 14px; }
   .monthly-checklist-reminder-head { flex-direction: column; gap: 9px; }
