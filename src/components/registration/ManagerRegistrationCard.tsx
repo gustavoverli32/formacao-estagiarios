@@ -14,7 +14,7 @@ type ManagerItem = {
   funcional: string;
   agencia: string;
   regional_id?: string | null;
-  tipo_gestor: "ga" | "gga" | "tutor";
+  tipo_gestor: "ga" | "gga" | "facilitador" | "tutor";
   permissoes?: Record<string, boolean>;
 };
 
@@ -29,7 +29,7 @@ export function ManagerRegistrationCard({ onManagerCreated, canEdit = true }: Pr
   const [agencia, setAgencia] = useState("");
   const [regionalId, setRegionalId] = useState("");
   const [regionais, setRegionais] = useState<Array<{ id: string; nome: string }>>([]);
-  const [tipoGestor, setTipoGestor] = useState<"ga" | "gga" | "tutor">("ga");
+  const [tipoGestor, setTipoGestor] = useState<"ga" | "gga" | "facilitador" | "tutor">("ga");
   const [permTrilhas, setPermTrilhas] = useState(true);
   const [permAgendamentos, setPermAgendamentos] = useState(true);
   const [permProducao, setPermProducao] = useState(true);
@@ -290,6 +290,7 @@ export function ManagerRegistrationCard({ onManagerCreated, canEdit = true }: Pr
             >
               <option value="ga">Gestor de Agência (GA)</option>
               <option value="gga">Gestor Geral de Agência (GGA)</option>
+              <option value="facilitador">Facilitador</option>
               <option value="tutor">Tutora / Administradora Regional</option>
             </select>
           </div>

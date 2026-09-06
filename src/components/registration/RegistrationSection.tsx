@@ -13,7 +13,7 @@ type ManagerItem = {
   funcional: string;
   agencia?: string;
   regional_id?: string | null;
-  tipo_gestor: "ga" | "gga" | "tutor";
+  tipo_gestor: "ga" | "gga" | "facilitador" | "tutor";
   permissoes?: Record<string, boolean>;
 };
 
@@ -268,7 +268,7 @@ export function RegistrationSection({
               >
                 {managers.map((m) => {
                   const roleLabel =
-                    m.tipo_gestor === "tutor" ? "Tutora Regional" : m.tipo_gestor === "gga" ? "GGA" : "GA";
+                    m.tipo_gestor === "tutor" ? "Tutora Regional" : m.tipo_gestor === "gga" ? "GGA" : m.tipo_gestor === "facilitador" ? "Facilitador" : "GA";
 
                   return (
                     <div

@@ -61,6 +61,16 @@ test("accepts the regional manager role and rejects unknown manager roles", () =
   );
 });
 
+test("accepts the facilitator role with the same permission model as GGA", () => {
+  const manager = parseManagerAdmin({
+    permissions: { trilhas: true, ranking: true, todos_estagiarios: true, configuracoes: true },
+    managerType: "facilitador",
+    password: "",
+  });
+  assert.equal(manager.managerType, "facilitador");
+  assert.equal(manager.permissions.todos_estagiarios, true);
+});
+
 test("requires agency when creating or editing a manager", () => {
   const regionalId = "123e4567-e89b-42d3-a456-426614174000";
   assert.deepEqual(
@@ -78,6 +88,14 @@ test("requires agency when creating or editing a manager", () => {
   assert.throws(() =>
     parseManagerCreate({ name: "Maria", employeeCode: "123456789", agency: "4563", regionalId: "" }),
   );
+});
+
+test("accepts facilitator when it is selected while creating a manager", () => {
+  const regionalId = "123e4567-e89b-42d3-a456-426614174000";
+  const manager = parseManagerCreate({
+    name: "Maria", employeeCode: "123456789", agency: "4563", regionalId, managerType: "facilitador",
+  });
+  assert.equal(manager.managerType, "facilitador");
 });
 
 test("rejects appointments with invalid student ids", () => {

@@ -15,6 +15,13 @@ test("exposes Gerente Regional in the permission dialog", () => {
   assert.match(sourceApp, /tipoLiderRegional/);
 });
 
+test("exposes Facilitador with the same client access path as GGA", () => {
+  assert.match(sourceHtml, /id="tipoFacilitador"/);
+  assert.match(sourceHtml, /Mesmo acesso do GGA/);
+  assert.match(sourceApp, /gestorLogado\.tipo_gestor === 'facilitador'/);
+  assert.match(sourceApp, /tipoFacilitador\.onchange/);
+});
+
 test("lets only the regional manager switch regional views", () => {
   assert.match(sourceApp, /function isGerenteRegional\(\)/);
   assert.match(sourceApp, /if\(tipo === 'lider_regional'\) return true/);

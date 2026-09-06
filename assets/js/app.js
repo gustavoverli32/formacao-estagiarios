@@ -808,7 +808,7 @@ function getEffectiveTrilhaKey(e){
 
 function isGGA(){
   if(!modoGestor || !gestorLogado) return false;
-  return gestorLogado.tipo_gestor === 'gga';
+  return gestorLogado.tipo_gestor === 'gga' || gestorLogado.tipo_gestor === 'facilitador';
 }
 function isGerenteRegional(){
   if(!modoGestor || !gestorLogado) return false;
@@ -2934,9 +2934,11 @@ function abrirPermissoesGestor(id){
   // Carregar tipo de gestor
   var tipoGA = document.getElementById('tipoGA');
   var tipoGGA = document.getElementById('tipoGGA');
+  var tipoFacilitador = document.getElementById('tipoFacilitador');
   var tipoLiderRegional = document.getElementById('tipoLiderRegional');
   tipoGA.checked = (tipo === 'ga');
   tipoGGA.checked = (tipo === 'gga');
+  tipoFacilitador.checked = (tipo === 'facilitador');
   tipoLiderRegional.checked = (tipo === 'lider_regional');
 
   // Carregar permissões
@@ -2955,6 +2957,13 @@ function abrirPermissoesGestor(id){
   }
   tipoGA.onchange = function(){ if(this.checked) habilitarPermissoesGestor(); };
   tipoGGA.onchange = function(){
+    if(!this.checked) return;
+    ['permTrilhas','permRanking','permTodosEstag','permConfiguracoes'].forEach(function(field){
+      document.getElementById(field).checked = true;
+    });
+    habilitarPermissoesGestor();
+  };
+  tipoFacilitador.onchange = function(){
     if(!this.checked) return;
     ['permTrilhas','permRanking','permTodosEstag','permConfiguracoes'].forEach(function(field){
       document.getElementById(field).checked = true;
@@ -3139,9 +3148,9 @@ function renderGestoresList(){
     var perms = g.permissoes || {};
     var pCount = Object.keys(perms).filter(function(k){ return perms[k]; }).length;
     var tipo = g.tipo_gestor || 'ga';
-    var tipoBg = tipo === 'gga' ? '#FEE2E2' : (tipo === 'lider_regional' ? '#EDE9FE' : '#E0F2FE');
-    var tipoColor = tipo === 'gga' ? '#DC2626' : (tipo === 'lider_regional' ? '#6D28D9' : '#0369A1');
-    var tipoLabel = tipo === 'gga' ? '👔 GGA' : (tipo === 'lider_regional' ? '🧭 Gerente Regional' : '👤 GA');
+    var tipoBg = tipo === 'gga' ? '#FEE2E2' : (tipo === 'facilitador' ? '#DCFCE7' : (tipo === 'lider_regional' ? '#EDE9FE' : '#E0F2FE'));
+    var tipoColor = tipo === 'gga' ? '#DC2626' : (tipo === 'facilitador' ? '#15803D' : (tipo === 'lider_regional' ? '#6D28D9' : '#0369A1'));
+    var tipoLabel = tipo === 'gga' ? '👔 GGA' : (tipo === 'facilitador' ? '🤝 Facilitador' : (tipo === 'lider_regional' ? '🧭 Gerente Regional' : '👤 GA'));
 
     return '<div class="cad-list-row">'
       +'<div class="cad-list-av" style="background:var(--ink);color:#fff;">'+escapeHtml(g.nome[0].toUpperCase())+'</div>'

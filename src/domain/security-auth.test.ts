@@ -20,6 +20,8 @@ test("production-access.ts enforces origin check, tutora permissions, and studen
   assert.equal(accessSource.includes("requireProductionSession"), true);
   assert.equal(accessSource.includes("requireTutorSession"), true);
   assert.equal(accessSource.includes("requireTutorOrGga"), true);
+  assert.equal(accessSource.includes("isGgaEquivalent"), true);
+  assert.equal(accessSource.includes('managerType === "facilitador"'), true);
   assert.equal(accessSource.includes("assertSameOrigin"), true);
   assert.equal(accessSource.includes("authorizeStudentWrite"), true);
 });

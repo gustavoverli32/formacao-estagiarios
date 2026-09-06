@@ -15,7 +15,7 @@ export type ManagerRegistrationInput = {
   funcional: string;
   agencia: string;
   regional_id: string;
-  tipo_gestor: "ga" | "gga" | "tutor";
+  tipo_gestor: "ga" | "gga" | "facilitador" | "tutor";
   permissoes?: {
     trilhas?: boolean;
     agendamentos?: boolean;
@@ -90,8 +90,8 @@ export function validateManagerRegistrationInput(input: Partial<ManagerRegistrat
     errors.regional_id = "Selecione a regional do gestor.";
   }
 
-  if (!input.tipo_gestor || !["ga", "gga", "tutor"].includes(input.tipo_gestor)) {
-    errors.tipo_gestor = "Selecione o tipo de perfil do gestor (GA, GGA ou Tutor).";
+  if (!input.tipo_gestor || !["ga", "gga", "facilitador", "tutor"].includes(input.tipo_gestor)) {
+    errors.tipo_gestor = "Selecione o tipo de perfil do gestor (GA, GGA, Facilitador ou Tutor).";
   }
 
   return {

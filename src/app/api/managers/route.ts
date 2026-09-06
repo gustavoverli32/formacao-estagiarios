@@ -30,6 +30,17 @@ export async function POST(request: Request) {
         funcional: input.employeeCode,
         agencia: input.agency,
         regional_id: input.regionalId,
+        ...(input.managerType ? { tipo_gestor: input.managerType } : {}),
+        ...(input.managerType === "gga" || input.managerType === "facilitador"
+          ? {
+              permissoes: {
+                trilhas: true,
+                ranking: true,
+                todos_estagiarios: true,
+                configuracoes: true,
+              },
+            }
+          : {}),
         senha_hash: hashManagerPassword(input.employeeCode.slice(0, 4)),
       })
       .select("id,nome,funcional,agencia,permissoes,tipo_gestor,regional_id")

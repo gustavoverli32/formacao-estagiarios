@@ -137,15 +137,27 @@ export type ManagerCreateInput = {
   employeeCode: string;
   agency: string;
   regionalId: string;
+  managerType?: "ga" | "gga" | "facilitador" | "tutor";
 };
 
 export function parseManagerCreate(value: unknown): ManagerCreateInput {
   const body = asRecord(value, "Dados do gestor invalidos.");
+  const managerType = body.managerType ?? body.tipo_gestor;
+  if (
+    managerType !== undefined &&
+    managerType !== "ga" &&
+    managerType !== "gga" &&
+    managerType !== "facilitador" &&
+    managerType !== "tutor"
+  ) {
+    throw new Error("Tipo de gestor invalido.");
+  }
   return {
     name: cleanString(body.name, "Nome", 120, true),
     employeeCode: cleanDigits(body.employeeCode, "Funcional", 9, true),
     agency: cleanString(body.agency, "Agencia", 60, true),
     regionalId: parseUuid(body.regionalId ?? body.regional_id, "Regional"),
+    ...(managerType !== undefined ? { managerType } : {}),
   };
 }
 
@@ -171,7 +183,7 @@ export type ManagerAdminInput = {
     todos_estagiarios: boolean;
     configuracoes: boolean;
   };
-  managerType: "ga" | "gga" | "lider_regional";
+  managerType: "ga" | "gga" | "facilitador" | "lider_regional";
   password: string;
 };
 
@@ -179,7 +191,12 @@ export function parseManagerAdmin(value: unknown): ManagerAdminInput {
   const body = asRecord(value, "Permissoes invalidas.");
   const permissions = asRecord(body.permissions, "Permissoes invalidas.");
   const managerType = body.managerType;
-  if (managerType !== "ga" && managerType !== "gga" && managerType !== "lider_regional") {
+  if (
+    managerType !== "ga" &&
+    managerType !== "gga" &&
+    managerType !== "facilitador" &&
+    managerType !== "lider_regional"
+  ) {
     throw new Error("Tipo de gestor invalido.");
   }
   const password = cleanString(body.password, "Senha", 128);

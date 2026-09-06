@@ -3,6 +3,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase-server";
 import { removeAppointmentFile } from "@/server/appointment-storage";
 import {
   assertSameOrigin,
+  isGgaEquivalent,
   loadSessionManager,
   ProductionHttpError,
   productionErrorResponse,
@@ -77,7 +78,7 @@ async function authorizeAppointment(
   const manager = await loadSessionManager(supabase, session);
   const permissions = (manager.permissoes ?? {}) as Record<string, unknown>;
   const canEditAnyAppointment =
-    manager.tipo_gestor === "gga" ||
+    isGgaEquivalent(manager.tipo_gestor) ||
     (manager.tipo_gestor !== "lider_regional" && permissions.todos_estagiarios === true);
   if (data.gestor_id !== manager.id && !canEditAnyAppointment) {
     throw new ProductionHttpError("Sem permissao para alterar este agendamento.", 403);

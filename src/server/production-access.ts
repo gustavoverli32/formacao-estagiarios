@@ -71,10 +71,15 @@ export async function requireTutorOrGga(
 ) {
   if (session.role === "tutora") return null;
   const manager = await loadSessionManager(supabase, session);
-  if (manager.tipo_gestor !== "gga") {
-    throw new ProductionHttpError("Apenas a tutora ou um GGA pode concluir esta operacao.", 403);
+  if (!isGgaEquivalent(manager.tipo_gestor)) {
+    throw new ProductionHttpError("Apenas a tutora, um GGA ou um facilitador pode concluir esta operacao.", 403);
   }
   return manager;
+}
+
+/** Facilitadores possuem o mesmo alcance operacional do GGA. */
+export function isGgaEquivalent(managerType: string | null | undefined) {
+  return managerType === "gga" || managerType === "facilitador";
 }
 
 export function assertSameOrigin(request: Request) {

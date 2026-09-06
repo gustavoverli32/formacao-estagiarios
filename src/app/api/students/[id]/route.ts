@@ -4,6 +4,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase-server";
 import {
   assertSameOrigin,
   authorizeStudentWrite,
+  isGgaEquivalent,
   loadSessionManager,
   ProductionHttpError,
   productionErrorResponse,
@@ -46,7 +47,7 @@ export async function PATCH(request: Request, { params }: RouteContext) {
         throw new ProductionHttpError("Gestores só podem manter estagiários na própria regional.", 403);
       }
       await authorizeStudentWrite(supabase, session, id);
-      if (manager.tipo_gestor !== "gga") {
+      if (!isGgaEquivalent(manager.tipo_gestor)) {
         const permissions = (manager.permissoes ?? {}) as Record<string, unknown>;
         if (permissions.trilhas !== true) {
           throw new ProductionHttpError("Sem permissao para editar trilhas.", 403);
