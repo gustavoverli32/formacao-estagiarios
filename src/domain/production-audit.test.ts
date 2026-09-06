@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   buildProductionAuditEntry,
   enrichProductionAuditHistoryRegionals,
+  filterProductionAuditHistoryByActiveStudentIds,
   filterProductionAuditHistoryByRegional,
   getMostRecentlyClosedDeadline,
   mergeProductionAuditEntry,
@@ -22,6 +23,22 @@ test("finds the latest deadline that has already closed", () => {
     getMostRecentlyClosedDeadline({}, new Date("2026-08-21T12:00:00-03:00")),
     "2026-08-14",
   );
+});
+
+test("omits archived students from operational pending history and counts", () => {
+  const history = [
+    {
+      deadline: "2026-09-04",
+      capturedAt: "2026-09-05T03:00:00.000Z",
+      pending: [
+        { id: "active", nome: "Ativa", responsibleManagers: [] },
+        { id: "archived", nome: "Arquivada", responsibleManagers: [] },
+      ],
+    },
+  ];
+
+  const filtered = filterProductionAuditHistoryByActiveStudentIds(history, ["active"]);
+  assert.deepEqual(filtered[0].pending.map((student) => student.id), ["active"]);
 });
 
 test("captures only students who did not confirm the requested deadline", () => {

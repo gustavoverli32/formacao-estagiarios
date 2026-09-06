@@ -6,6 +6,7 @@ import {
 } from "@/domain/read-model";
 import {
   enrichProductionAuditHistoryRegionals,
+  filterProductionAuditHistoryByActiveStudentIds,
   filterProductionAuditHistoryByRegional,
   normalizeProductionAuditHistory,
 } from "@/domain/production-audit";
@@ -186,11 +187,14 @@ export async function GET(request: Request) {
 
     const activeRows = rows.filter((row) => !row.arquivado_em);
     const archivedRows = rows.filter((row) => Boolean(row.arquivado_em));
-    const productionAuditHistory = enrichProductionAuditHistoryRegionals(
-      normalizeProductionAuditHistory(
-        settings.get("historico_pendencias_producao"),
+    const productionAuditHistory = filterProductionAuditHistoryByActiveStudentIds(
+      enrichProductionAuditHistoryRegionals(
+        normalizeProductionAuditHistory(
+          settings.get("historico_pendencias_producao"),
+        ),
+        rows,
       ),
-      rows,
+      activeRows.map((row) => row.id),
     );
     let students: Array<ReturnType<typeof privateStudent>> = activeRows.map(privateStudent);
     let archivedStudents = archivedRows.map(privateStudent);

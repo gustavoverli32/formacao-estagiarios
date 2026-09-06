@@ -208,6 +208,25 @@ export function filterProductionAuditHistoryByRegional(
     .filter((entry) => entry.pending.length > 0);
 }
 
+/**
+ * O histórico é um retrato da semana encerrada, mas a tela operacional não
+ * deve continuar atribuindo pendências a pessoas que já não são estagiárias
+ * ativas. Mantemos o registro bruto para auditoria, removendo apenas a
+ * exibição e as contagens dos perfis arquivados.
+ */
+export function filterProductionAuditHistoryByActiveStudentIds(
+  history: ProductionAuditEntry[],
+  activeStudentIds: Iterable<string>,
+) {
+  const activeIds = new Set(Array.from(activeStudentIds, String));
+  return history
+    .map((entry) => ({
+      ...entry,
+      pending: entry.pending.filter((student) => activeIds.has(String(student.id))),
+    }))
+    .filter((entry) => entry.pending.length > 0);
+}
+
 export function mergeProductionAuditEntry(
   history: ProductionAuditEntry[],
   entry: ProductionAuditEntry,

@@ -974,8 +974,11 @@ function renderProductionAuditHistory(){
   if(!el) return;
   renderProductionAuditRegionalFilter();
   var selectedRegionalId = getProductionAuditRegionalId();
+  var activeStudentIds = new Set((S.ests || []).map(function(student){ return String(student.id); }));
   var history = (S.productionAuditHistory || []).map(function(entry){
-    var pending = Array.isArray(entry && entry.pending) ? entry.pending : [];
+    var pending = (Array.isArray(entry && entry.pending) ? entry.pending : []).filter(function(student){
+      return student && activeStudentIds.has(String(student.id));
+    });
     if(selectedRegionalId && selectedRegionalId !== 'all'){
       pending = pending.filter(function(student){
         return String(student && student.regionalId || '') === String(selectedRegionalId);
@@ -2907,6 +2910,7 @@ async function confirmArchiveStudent(){
     delete overlay.dataset.studentId;
     closePanel();
     renderArchivedStudents();
+    renderProductionAuditHistory();
     renderCadList();
     renderOverviewAll();
     renderRanking();
